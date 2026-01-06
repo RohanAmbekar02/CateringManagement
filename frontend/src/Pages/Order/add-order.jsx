@@ -1,50 +1,11 @@
 import React from "react";
-<<<<<<< HEAD
-import { useState } from "react";
-import "bootstrap/dist/css/bootstrap.min.css";
-=======
 
->>>>>>> 56ad6f9f0055f5ceb3bdad796527711e1b097b3c
 import "./add-order.css";
+// import "bootstrap/dist/css/bootstrap.min.css";
 
 function AddOrder() {
-
-  const [items, setItems] = useState([
-    { id: 1, qty: 1, price: 0 }
-  ]);
-
-  const addItem = () => {
-    setItems([
-      ...items,
-      { id: Date.now(), qty: 1, price: 0 }
-    ]);
-  };
-
-  const updateItem = (id, field, value) => {
-    setItems(
-      items.map(item =>
-        item.id === id ? { ...item, [field]: value } : item
-      )
-    );
-  };
-
-  const deleteItem = (id) => {
-    setItems(items.filter(item => item.id !== id));
-  };
-
-  // Optional: calculate subtotal
-  // const subtotal = items.reduce((sum, item) => sum + item.qty * item.price, 0);
-  // const totalQty = items.reduce((sum, item) => sum + item.qty, 0);
-  
-
-
   return (
-<<<<<<< HEAD
-
-    <div className="container-fluid mt-3"> {/* Added container-fluid for proper padding */}
-=======
     <div className="container-fluid mt-3"> 
->>>>>>> 56ad6f9f0055f5ceb3bdad796527711e1b097b3c
       <div className="row">
             <div className="col-12 mb-3">
           <h4 className="border-bottom pb-2">Create Order</h4>
@@ -79,28 +40,6 @@ function AddOrder() {
               </tr>
             </thead>
             <tbody>
-<<<<<<< HEAD
-              {items.map((item, index) => (
-                <tr key={item.id}>
-                  <td><button className="delete-btn" onClick={() => deleteItem(item.id)}><i className="fa-solid fa-trash"></i></button></td>
-                  <td>{index + 1}</td>
-                  <td>
-                    <select className="form-select form-select-sm">
-                      <option>Item 1</option>
-                    </select>
-                  </td>
-                  <td><input type="number" className="form-control form-control-sm"  value={item.qty} onChange={(e) => updateItem(item.id, "qty", Number(e.target.value))}
-                    
-/></td>
-                  <td><input type="number" className="form-control form-control-sm"   value={item.price} onChange={(e) => updateItem(item.id, "price", Number(e.target.value))} 
-                    
-                 /></td>
-                  <td className="total-cell">
-                     ₹ {(item.qty * item.price).toFixed(2)}
-                  </td>
-                </tr>
-                 ))}
-=======
               <tr>
                 <td><button className="delete-btn"><i className="fa-solid fa-trash"></i></button></td>
                 <td>1</td>
@@ -113,13 +52,12 @@ function AddOrder() {
                 <td><input type="number" className="form-control form-control-sm" defaultValue={0} /></td>
                 <td className="total-cell">₹ 0</td>
               </tr>
->>>>>>> 56ad6f9f0055f5ceb3bdad796527711e1b097b3c
             </tbody>
           </table>
         </div>
 
         <div className="col-12 text-end">
-          <button className="btn btn-primary mt-2" onClick={addItem}>+ Add Item</button>
+          <button className="btn btn-primary mt-2">+ Add Item</button>
         </div>
 
         
@@ -128,12 +66,11 @@ function AddOrder() {
             <span>Subtotal (Qty: 1)</span>
             <span>Subtotal (Price: 0)</span>
           </div>
-
+          
           <div className="d-flex justify-content-between align-items-center mt-3">
             <label className="fw-bold">Paid Amount</label>
-            <input type="number" className="form-control w-25 w-md-25" defaultValue={0} />
+            <input type="number" className="form-control w-50 w-md-25" defaultValue={0} />
           </div>
-          
 
           <div className="d-flex justify-content-between mt-3 text-danger fw-bold">
             <span>Unpaid Amount</span>
