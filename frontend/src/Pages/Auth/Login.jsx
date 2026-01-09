@@ -8,16 +8,16 @@ const Login = () => {
       <h2>Catering Management Login</h2>
       <form>
         <div className="input-group">
-          <label>युजरनेम:</label>
-          <input type="text" placeholder="तुमचे नाव टाका" />
+          <label>Username:</label>
+          <input type="text" placeholder="Enter your name" />
         </div>
         <br />
         <div className="input-group">
-          <label>पासवर्ड:</label>
-          <input type="password" placeholder="पासवर्ड टाका" />
+          <label>Password:</label>
+          <input type="password" placeholder="Enter password"/>
         </div>
         <br />
-        <button type="submit">लॉगिन करा</button>
+        <button type="submit">Login</button>
       </form>
     </div>
   );
