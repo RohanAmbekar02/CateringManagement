@@ -1,14 +1,89 @@
-*{
-    margin:0px;
-    padding: 0px;
+
+html, body, #root {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100%;
+  overflow-x: hidden;
 }
 
-.body{
-    background-image: url(C:\Users\SCS\Desktop\catering-management-system\CateringManagement\frontend\src\assets\catering.png);
-    background-repeat: no-repeat;
-    height: 600px;
-    width: 100%;
-
+* {
+  box-sizing: border-box;
 }
 
 
+.login-container {
+  width: 100%;
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-image: url('catering.png');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  padding: 20px; 
+}
+
+
+.login-card {
+  background: white;
+  padding: 40px 30px;
+  border-radius: 25px;
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3);
+  
+  
+  width: 100%;       
+  max-width: 400px;  
+  
+  text-align: center;
+}
+
+
+.input-group input {
+  width: 100%;
+  padding: 14px;
+  margin-bottom: 15px;
+  border: 1px solid #ddd;
+  border-radius: 12px;
+  font-size: 16px;
+  outline: none;
+}
+
+.login-button {
+  width: 100%;
+  padding: 14px;
+  background-color: rgb(185, 8, 185);
+  color: white;
+  border: none;
+  border-radius: 12px;
+  font-size: 18px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+
+@media (max-width: 480px) {
+  .login-card {
+    padding: 30px 20px; 
+    border-radius: 20px;
+  }
+  
+  .title {
+    font-size: 22px;
+  }
+  
+  .form-options {
+    flex-direction: column; 
+    gap: 10px;
+    align-items: flex-start;
+  }
+}
+
+
+@media (min-width: 481px) and (max-width: 768px) {
+  .login-card {
+    max-width: 380px;
+  }
+}
