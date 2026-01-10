@@ -11,7 +11,8 @@ const Login = () => {
           borderRadius: '50%', margin: '0 auto 15px',
           display: 'flex', justifyContent: 'center', alignItems: 'center',
           fontSize: '35px', color: 'white'
-        }}>👤</div>
+        }}>
+          <img src='catering.png' className="rounded-circle"></img></div>
         
         <h2 className="title">Welcome Back!</h2>
         <p style={{color: '#666', marginBottom: '25px'}}>Log in to your account</p>
