@@ -26,6 +26,7 @@ html, body, #root {
 }
 
 
+
 .login-card {
   background: white;
   padding: 40px 30px;
@@ -48,6 +49,13 @@ html, body, #root {
   border-radius: 12px;
   font-size: 16px;
   outline: none;
+  transition: 0.3s;
+ box-sizing: border-box;
+}
+
+.input-group input:focus{
+  border-color:  rgb(185, 8, 185);
+  box-shadow: 0 0 5px rgba(124,93,250,0.2);
 }
 
 .login-button {
