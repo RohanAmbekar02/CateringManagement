@@ -7,10 +7,9 @@ import Order from './Pages/Order/details';
 import Login from './Pages/Auth/Login';
 import ItemDetails from './Pages/Item/item-details';
 import Customer from './Pages/Customer/customer-details';
-
 import Reviews from './Pages/Order/review';
-
 import Details from './Pages/Order/details';
+import AddItem from './Pages/Item/add-item';
 
 
 function App() {
@@ -25,10 +24,9 @@ function App() {
           <Route path="/item" element={<ItemDetails />} />
           <Route path="/order" element={<Order />} />
           <Route path="/customer" element={<Customer />} />
-
-  <Route path="/review" element={<Reviews />} />
-
-        <Route path="/details" element={<Details />} />
+          <Route path="/review" element={<Reviews />} />
+          <Route path="/details" element={<Details />} />
+          <Route path="/add-item" element={<AddItem />} />
 
         </Route >
 
