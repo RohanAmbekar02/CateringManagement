@@ -1,9 +1,25 @@
-import React from 'react'
+import React from "react";
+import "./Navbar.css";
+import logo from "../assets/CMP.jpeg";
 
-function Navbar() {
+const Navbar = ({ username = "Admin", onLogout }) => {
   return (
-    <div>Navbar</div>
-  )
-}
+    <nav className="navbar">
+      {/* Left: Logo */}
+      <div className="navbar-left">
+        <img src={logo} alt="Catering Management" className="navbar-logo" />
+        <span className="navbar-title">Catering Management</span>
+      </div>
 
-export default Navbar
+      {/* Right: User info */}
+      <div className="navbar-right">
+        <span className="welcome-text">Welcome, {username}</span>
+        <button className="logout-btn" onClick={onLogout}>
+          Logout
+        </button>
+      </div>
+    </nav>
+  );
+};
+
+export default Navbar;
