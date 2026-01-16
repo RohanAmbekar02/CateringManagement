@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 import React from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import Layout from './Layout/Layout';
@@ -37,18 +36,3 @@ function App() {
 }
 
 export default App;
-=======
-import Login from './Pages/Auth/Login';
-import './App.css';
-
-function App(){
-  return(
-     <div className="App">
-      <Login />
-    </div> 
-       
-  );
-}
-
-export default App;
->>>>>>> 24d82f9928b4e554695f237bf2e65eeeeaa7199b
