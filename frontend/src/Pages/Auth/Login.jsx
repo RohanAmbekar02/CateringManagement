@@ -1,12 +1,4 @@
-<<<<<<< HEAD
-function Login() {
-    return (
-        <div>
-            <h1>Login Page</h1>
-        </div>
-    )
-}export default Login;
-=======
+
 import React from 'react';
 import './Login.css';
 import Swal from 'sweetalert2';
@@ -81,4 +73,3 @@ const Login = () => {
 };
 
 export default Login;
->>>>>>> 24d82f9928b4e554695f237bf2e65eeeeaa7199b
