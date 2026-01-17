@@ -3,7 +3,7 @@ import "./details.css";
 
 export default function Details() {
   return (
-    <div className="page shadow ml-5">
+    <div className="page shadow container-fluid">
 
 
       <h2 className="page-title ml-2">Orders</h2>
@@ -45,25 +45,17 @@ export default function Details() {
           </div>
 
 
-
           <div className="actions">
-            <span className="pending-btn">Pending</span>
+            <button className="pending-btn">Pending</button>
 
-            <button className="icon blue mt-5 book-icon">
-              <i className="fa-solid fa-book text-primary"></i>
-            </button>
 
-            <button className="icon teal mt-5 text-success phone-icon"><i class="fa-solid fa-phone"></i></button>
+            <button className="icon book-icon"><i className="fa-solid fa-book"></i></button>
+            <button className="icon phone-icon"><i className="fa-solid fa-phone"></i></button>
+            <button className="icon delect-icon"><i className="fa-solid fa-trash"></i></button>
+            <button className="icon pencil-icon"><i className="fa-solid fa-pencil text-primary"></i></button>
+            <span className="dots">...</span>
 
-            <button className="icon red mt-5 delect-icon">
-              <i className="fa-solid fa-trash"></i>
-            </button>
-
-            <button className="icon sky mt-5 text-primary pencil-icon"><i class="fa-solid fa-pencil"></i></button>
-
-            <span className="gray mt-5">. . .</span>
           </div>
-
 
         </div>
       ))}

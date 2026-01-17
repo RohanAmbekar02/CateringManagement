@@ -48,8 +48,6 @@ body {
     font-size: 14px;
 }
 
-
-
 .btn-wrapper {
     display: flex;
     justify-content: flex-start;
@@ -69,7 +67,6 @@ body {
     cursor: pointer;
 }
 
-
 @media (min-width: 768px) {
     .add-btn {
         width: 40px;
@@ -78,7 +75,6 @@ body {
     }
 }
 
-
 @media (min-width: 1024px) {
     .add-btn {
         width: 44px;
@@ -86,7 +82,6 @@ body {
         font-size: 24px;
     }
 }
-
 
 .filters {
     display: flex;
@@ -138,25 +133,28 @@ body {
     font-family: 'Open Sans', sans-serif;
 }
 
+.pending-btn {
+    padding: 6px 20px;
+    font-size: 14px;
+    border: none;
+    border-radius: 30px;
+    background-color: #f1cc98;
+    color: #854e14;
+    cursor: pointer;
+    white-space: nowrap;
+    transition: 0.3s ease;
+    font-family: 'Open Sans', sans-serif;
+
+}
+
+.pending-btn:hover {
+    background-color: #ec971f;
+}
+
 .actions {
     display: flex;
     align-items: center;
     gap: 10px;
-    flex-wrap: wrap;
-}
-
-.pending-btn {
-    background: #fdecc8;
-    color: #e49610;
-    padding: 6px 15px;
-    border-radius: 20px;
-    font-size: 14px;
-    font-family: 'Open Sans', sans-serif;
-    white-space: nowrap;
-    cursor: pointer;
-    position: relative;
-    left: 75%;
-    top: -30%;
 }
 
 .icon {
@@ -167,81 +165,48 @@ body {
     display: flex;
     align-items: center;
     justify-content: center;
+    font-size: 14px;
     cursor: pointer;
 }
 
 .book-icon {
-    background: #e0ecff;
+    background: #e7efff;
+    color: #2563eb;
 }
 
 .phone-icon {
-    background: rgb(195, 248, 195);
+    background: #dcfce7;
+    color: #16a34a;
 }
 
 .delect-icon {
     background: #fee2e2;
+    color: #dc2626;
 }
 
 .pencil-icon {
-    background: #e0ecff;
+    background: #e0f2fe;
+    color: #0284c7;
 }
 
-
-@media (max-width: 1024px) {
+@media (max-width: 600px) {
     .order-card {
         flex-direction: column;
     }
 
     .actions {
-        justify-content: flex-start;
-    }
-}
-
-
-@media (max-width: 768px) {
-
-    .header {
-        flex-direction: column;
-        align-items: flex-start;
-        gap: 10px;
-    }
-
-    .header-right {
         width: 100%;
+        margin-top: 10px;
         justify-content: space-between;
     }
 
-    .search-row {
-        flex-direction: column;
-    }
-
-    .add-btn {
-        width: 100%;
-        height: 45px;
-    }
-
-    .order-card {
-        flex-direction: column;
-    }
-
-    .actions {
-        gap: 8px;
-    }
-}
-
-
-@media (max-width: 480px) {
-    .page-title {
-        font-size: 22px;
-    }
-
     .icon {
-        width: 32px;
-        height: 32px;
+        width: 34px;
+        height: 34px;
+        font-size: 13px;
     }
 
-    .pending-btn {
-        font-size: 12px;
-        padding: 4px 12px;
+    .dots {
+        text-align: center;
     }
 }
