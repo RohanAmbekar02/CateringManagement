@@ -1,7 +1,7 @@
 /* Overlay */
 .overlay {
   position: fixed;
-  top: 0;
+  top: 1;
   left: 0;
   width: 100%;
   height: 100%;
@@ -9,9 +9,7 @@
   display: flex;
   justify-content: center;
   align-items: flex-start;
-  z-index: 99999;  /* ADD THIS */
 }
-
 
 /* Modal Box */
 .modal-box {
@@ -20,7 +18,6 @@
   max-width: 95%;
   background: #fff;
   border-radius: 8px;
-  height: 250px;
 }
 
 /* Header */
@@ -29,7 +26,7 @@
   padding: 10px 15px;
   display: flex;
   justify-content: space-between;
-  align-items: center;
+  
 }
 
 .add-head {
@@ -152,4 +149,29 @@
   .additem-btn {
     width: 100%;
   }
+}
+
+
+/* Validation */
+.field-wrapper {
+  width: 48%;              
+  display: flex;
+  flex-direction: column; 
+}
+
+
+.modal-body input {
+  width: 100%;
+}
+
+@media (max-width: 600px) {
+  .field-wrapper {
+    width: 100%;
+  }
+}
+
+.error-text {
+  color: red;
+  font-size: 12px;
+  margin-top: 4px;
 }

@@ -11,6 +11,7 @@ import Reviews from './Pages/Order/review';
 import Details from './Pages/Order/details';
 import AddItem from './Pages/Item/add-item';
 import AddOrder from './Pages/Order/add-order';
+import AddCustomer from './Pages/Customer/AddCustomer';
 
 
 function App() {
@@ -29,6 +30,7 @@ function App() {
           <Route path="/details" element={<Details />} />
           <Route path="/add-item" element={<AddItem />} />
           <Route path="/add-order" element={<AddOrder />} />
+          <Route path="/add-customer" element={<AddCustomer />} />
 
         </Route >
 

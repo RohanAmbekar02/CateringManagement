@@ -5,6 +5,9 @@ import "./customer-details.css";
 import { FaEdit, FaTrash } from "react-icons/fa";
 
 const Customers = () => {
+
+ 
+
   const items = [
     { id: 1, name: "pooja Deshmukh",Number : 9827345378 },
     { id: 2, name: "Rajesh Patil", Number: 9871423897 },
@@ -23,9 +26,11 @@ const Customers = () => {
       <div className="d-flex justify-content-between align-items-center mb-3">
   <h2 className="items-title m-0">Customers</h2>
 
-  <button className="btn text-white btn-primary" >
+  <button className="btn text-white btn-primary"   >
     + Add Customer
   </button>
+
+   
 </div>
 
       {/* Search */}
