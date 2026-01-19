@@ -1,5 +1,5 @@
 import React from "react";
-import "bootstrap/dist/css/bootstrap.min.css";
+// import "bootstrap/dist/css/bootstrap.min.css";
 import "./add-order.css";
 // import "bootstrap/dist/css/bootstrap.min.css";
 
@@ -94,4 +94,4 @@ function AddOrder() {
   );
 }
 
-export default AddOrder
+export default AddOrder;
