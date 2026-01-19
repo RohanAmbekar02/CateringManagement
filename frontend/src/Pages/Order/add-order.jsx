@@ -1,22 +1,21 @@
 import React from "react";
-import "bootstrap/dist/css/bootstrap.min.css";
+
 import "./add-order.css";
 // import "bootstrap/dist/css/bootstrap.min.css";
 
 function AddOrder() {
   return (
-    <div className="container-fluid mt-3"> {/* Added container-fluid for proper padding */}
+    <div className="container-fluid mt-3"> 
       <div className="row">
-        {/* Title: Use standard padding, no negative margins */}
-        <div className="col-12 mb-3">
+            <div className="col-12 mb-3">
           <h4 className="border-bottom pb-2">Create Order</h4>
         </div>
 
-        {/* Inputs: Use col-md-6 for side-by-side on desktop, stacks on mobile */}
-        <div className="col-12 mb-3">
-          <div className="row g-3"> {/* g-3 adds responsive gutter spacing */}
-            <div className="col-md-6 col-12">
-              <select className="form-select">
+      
+        <div className="col-12 mb-1">
+          <div className="row g-3"> 
+            <div className="col-md-6 col-12 mb-1">
+              <select className="form-select form-control">
                 <option value="">Customer Name*</option>
                 <option value="1">Customer</option>
               </select>
@@ -45,7 +44,7 @@ function AddOrder() {
                 <td><button className="delete-btn"><i className="fa-solid fa-trash"></i></button></td>
                 <td>1</td>
                 <td>
-                  <select className="form-select form-select-sm">
+                  <select className="form-control form-select-sm">
                     <option>Item 1</option>
                   </select>
                 </td>
@@ -61,7 +60,7 @@ function AddOrder() {
           <button className="btn btn-primary mt-2">+ Add Item</button>
         </div>
 
-        {/* Summary: Use justify-content-between instead of marginLeft % */}
+        
         <div className="col-12 mt-3 p-3" style={{ backgroundColor: "whitesmoke" }}>
           <div className="d-flex justify-content-between fw-bold">
             <span>Subtotal (Qty: 1)</span>

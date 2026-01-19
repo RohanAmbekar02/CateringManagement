@@ -1,5 +1,6 @@
 import { useState, useMemo, useEffect } from "react";
-import './item-details.css'
+import './item-details.css';
+import AddItem from "./add-item"; // import your modal
 import {
   Card, CardContent, CardActions, Typography, Stack,
   Box, TextField, InputAdornment, Button, IconButton, Tooltip,
@@ -14,8 +15,7 @@ import {
   NavigateNext
 } from "@mui/icons-material";
 
-const itemsData = [
-
+const initialItems = [
   { id: 1, name: "Mixing Bowl", price: 500 },
   { id: 2, name: "Frying Pan", price: 1200 },
   { id: 3, name: "Tandoor Oven", price: 8000 },
@@ -28,19 +28,21 @@ const itemsData = [
   { id: 10, name: "Soup Ladle", price: 300 },
   { id: 11, name: "Grill Pan", price: 1800 },
   { id: 12, name: "Steamer Basket", price: 900 }
-
-
 ];
 
 export default function Items() {
+  const [items, setItems] = useState(initialItems);
   const [page, setPage] = useState(1);
-  const [rowsPerPage, setRowsPerPage] = useState(12); 
+  const [rowsPerPage, setRowsPerPage] = useState(12);
   const [searchQuery, setSearchQuery] = useState("");
   const [cardHeight, setCardHeight] = useState(0);
+  const [openAddModal, setOpenAddModal] = useState(false); // modal state
 
+  // Filtered items
   const filteredItems = useMemo(() =>
-    itemsData.filter(item => item.name.toLowerCase().includes(searchQuery.toLowerCase()))
-  , [searchQuery]);
+    items.filter(item => item.name.toLowerCase().includes(searchQuery.toLowerCase())),
+    [items, searchQuery]
+  );
 
   const totalPages = Math.ceil(filteredItems.length / rowsPerPage);
   const startIndex = (page - 1) * rowsPerPage;
@@ -48,19 +50,18 @@ export default function Items() {
 
   useEffect(() => {
     const updateCardHeight = () => {
-      const headerHeight = 100; 
-      const footerHeight = 80; 
+      const headerHeight = 100;
+      const footerHeight = 80;
       const gap = 16;
 
-      
       const vw = window.innerWidth;
-      let rows = 3; 
-      if (vw < 600) rows = Math.ceil(rowsPerPage / 1); 
-      else if (vw < 900) rows = Math.ceil(rowsPerPage / 2); 
+      let rows = 3;
+      if (vw < 600) rows = Math.ceil(rowsPerPage / 1);
+      else if (vw < 900) rows = Math.ceil(rowsPerPage / 2);
 
       const availableHeight = window.innerHeight - headerHeight - footerHeight - (gap * (rows - 1));
       const height = Math.floor(availableHeight / rows);
-      setCardHeight(height > 80 ? height : 80); // min height 80px
+      setCardHeight(height > 80 ? height : 80); 
     };
 
     updateCardHeight();
@@ -68,9 +69,15 @@ export default function Items() {
     return () => window.removeEventListener("resize", updateCardHeight);
   }, [rowsPerPage]);
 
+  // ✅ Handle adding new item
+  const handleAddItem = (newItem) => {
+    setItems(prev => [...prev, { id: prev.length + 1, ...newItem }]);
+    setOpenAddModal(false); // close modal
+  };
+
   return (
     <Box sx={{ height: "100vh", display: "flex", flexDirection: "column", p: 2, bgcolor: "#f4f6f8", boxSizing: "border-box" }}>
-
+      
       {/* HEADER */}
       <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 2 }}>
         <Box>
@@ -84,8 +91,14 @@ export default function Items() {
             InputProps={{ startAdornment: (<InputAdornment position="start"><SearchIcon fontSize="small" /></InputAdornment>) }}
           />
         </Box>
+
+        {/* Add Item Button */}
         <Tooltip title="Add Item">
-          <Button variant="contained" sx={{ width: 48, height: 48, borderRadius: "100%", bgcolor: "#1a237e", "&:hover": { bgcolor: "#0d1440" } }}>
+          <Button
+            variant="contained"
+            sx={{ width: 48, height: 48, borderRadius: "100%", bgcolor: "#1a237e", "&:hover": { bgcolor: "#0d1440" } }}
+            onClick={() => setOpenAddModal(true)}
+          >
             <AddIcon />
           </Button>
         </Tooltip>
@@ -133,7 +146,9 @@ export default function Items() {
           <IconButton size="small" disabled={page >= totalPages} onClick={() => setPage(p => p + 1)} sx={{ border: '1px solid #ddd', p: 0.2 }}><NavigateNext fontSize="small" /></IconButton>
         </Stack>
       </Box>
-    </Box>
-  )
-}
 
+      
+      {openAddModal && <AddItem onClose={() => setOpenAddModal(false)} onSubmit={handleAddItem} />}
+    </Box>
+  );
+}

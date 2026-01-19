@@ -70,7 +70,7 @@ function AddCustomer({ closePopup }) {
           />
         </div>
 
-        {/* Error message */}
+        
         {error && <p className="error-text">{error}</p>}
 
         <div className="modal-footer">

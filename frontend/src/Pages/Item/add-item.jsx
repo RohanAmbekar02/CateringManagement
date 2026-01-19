@@ -26,7 +26,7 @@ const AddItem = ({ onClose }) => {
       price,
     });
 
-    // ✅ Success Alert
+    
     Swal.fire({
       icon: "success",
       title: "Success",
