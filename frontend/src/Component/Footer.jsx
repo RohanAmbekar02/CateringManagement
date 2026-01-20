@@ -6,23 +6,23 @@ const Footer = () => {
   return (
     <footer className="footer">
       <NavLink to="/dashboard" className="footer-link">
-        <span>🏠</span>
-        <p>Dashboard</p>
+        <i className="fas fa-house"></i>
+        <span>Dashboard</span>
       </NavLink>
 
-      <NavLink to="/items" className="footer-link">
-        <span>🍽️</span>
-        <p>Items</p>
+      <NavLink to="/item" className="footer-link">
+        <i className="fas fa-utensils"></i>
+        <span>Items</span>
       </NavLink>
 
-      <NavLink to="/customers" className="footer-link">
-        <span>👥</span>
-        <p>Customers</p>
+      <NavLink to="/customer" className="footer-link">
+        <i className="fas fa-users"></i>
+        <span>Customers</span>
       </NavLink>
 
-      <NavLink to="/orders" className="footer-link">
-        <span>📦</span>
-        <p>Orders</p>
+      <NavLink to="/order" className="footer-link">
+        <i className="fas fa-box"></i>
+        <span>Orders</span>
       </NavLink>
     </footer>
   );

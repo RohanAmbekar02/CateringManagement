@@ -1,18 +1,60 @@
 import './review.css';
+import jsPDF from "jspdf";
+import html2canvas from "html2canvas";
+
+// download pdf code
+
+   const handleDownloadPdf = () => {
+  const invoice = document.querySelector(".card");
+  const btn = document.querySelector(".btn.btn-success");
+
+     // hide button
+    if (btn) btn.style.display = "none";
+
+      html2canvas(invoice, { scale: 2, useCORS: true, scrollY: -window.scrollY })
+    .then((canvas) => {
+      const imgData = canvas.toDataURL("image/png");
+      const pdf = new jsPDF("p", "mm", "a4");
+
+      const pageWidth = pdf.internal.pageSize.getWidth();
+      const pageHeight = pdf.internal.pageSize.getHeight();
+
+      const imgProps = pdf.getImageProperties(imgData);
+      const imgWidth = pageWidth - 20; 
+      const imgHeight = (imgProps.height * imgWidth) / imgProps.width;
+
+     
+      let scale = 1;
+      if (imgHeight > pageHeight - 20) {
+        scale = (pageHeight - 20) / imgHeight;
+      }
+
+      const finalWidth = imgWidth * scale;
+      const finalHeight = imgHeight * scale;
+      const x = (pageWidth - finalWidth) / 2;
+      const y = 10; 
+
+      pdf.addImage(imgData, "PNG", x, y, finalWidth, finalHeight);
+      pdf.save("Invoice.pdf");
+
+     
+      if (btn) btn.style.display = "block";
+    });
+};
+
 
 const OderpreviewBill = () => {
   return (
-    <div className="table-text">
-      <div className="card">
+<div className="table-text">
 
-        
-        <div className="invoice-header" >
+     <div className="card" >
+     <div className="invoice-header" >
           <p className="shree-text">॥ Shree ॥</p>
-          <h2 className="name">Catering Management System</h2>
-          
-        </div>
 
-     
+     <button className="btn btn-success" onClick={handleDownloadPdf}> Download PDF </button>
+       <h2 className="name">Catering Management System</h2>
+          </div>
+
         <div className="bill-info">
           <div>
             <p><b>Bill No:</b> inv_86</p>
@@ -24,8 +66,7 @@ const OderpreviewBill = () => {
           </div>
         </div>
 
-    
-        <table className="invoice-table">
+          <table className="invoice-table">
           <thead>
             <tr>
               <th>Sr.No</th>
@@ -57,7 +98,7 @@ const OderpreviewBill = () => {
               <td>6</td>
               <td>180</td>
             </tr>
-<tr>
+           <tr>
               <td>4</td>
               <td>ताट</td>
               <td>50</td>
@@ -102,26 +143,21 @@ const OderpreviewBill = () => {
            
           </tbody>
         </table>
-
-      
-        <div className="amount-box">
+          <div className="amount-box">
           <p>Bill Amount: <span>₹ 2730</span></p>
           <p>Paid Amount: <span>₹ 0</span></p>
           <p className="Unpaid-Amount">Unpaid Amount: <span>₹ 2730</span></p>
         </div>
-<hr></hr>
-       <h6> <span  className="bill-text"> Bill Amount In Words: </span>Two Thousand Seven Hundred Thirty.</h6>
+        <hr></hr>
+         <h6> <span  className="bill-text"> Bill Amount In Words: </span><span className='Two-Thousand-text'>Two Thousand Seven Hundred Thirty.</span></h6>
 
-        {/* Footer */}
-        <div className="signature">
+          <div className="signature">
           <p>Customer Signature</p>
           <p>Authorized Signatory</p>
         </div>
-
-      </div>
-    </div>
+        </div>
+         </div>
   );
 };
 
 export default OderpreviewBill;
-

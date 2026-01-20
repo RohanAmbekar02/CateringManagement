@@ -4,7 +4,7 @@
   gap: 22px;
   width: 100%;
    margin-left: 10%;
-   margin-top: 15%;
+   margin-top: 10%;
 
 }
 
@@ -172,4 +172,85 @@
     flex: 1 1 100%;
   }
 }
+/* ICON STYLING */
+.dash-icon {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 28px;
+  background: rgba(255, 255, 255, 0.6);
+  color: #fff; /* default white icon */
+  animation: float 3s ease-in-out infinite;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+}
 
+/* Colorful icons for each card */
+.blue .dash-icon i {
+  color: #2563eb; /* blue */
+}
+
+.violet .dash-icon i {
+  color: #7c3aed; /* violet */
+}
+
+.orange .dash-icon i {
+  color: #f97316; /* orange */
+}
+
+.teal .dash-icon i {
+  color: #14b8a6; /* teal */
+}
+
+/* =======================
+   DASHBOARD CONTAINER
+======================= */
+.dash-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 22px;
+  width: 100%;
+  padding: 20px;
+  padding-bottom: 120px; /* footer safe space */
+  box-sizing: border-box;
+}
+
+/* =======================
+   DASHBOARD CARD
+======================= */
+.dash-card {
+  border-radius: 20px;
+  padding: 26px;
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  position: relative;
+  overflow: hidden;
+  cursor: pointer;
+  transition: all 0.45s ease;
+  box-shadow: 0 14px 35px rgba(0, 0, 0, 0.08);
+  height: 130px;
+}
+
+/* Desktop – 4 cards */
+@media (min-width: 1024px) {
+  .dash-card {
+    flex: 1 1 23%;
+  }
+}
+
+/* Tablet – 2 cards */
+@media (max-width: 1023px) and (min-width: 600px) {
+  .dash-card {
+    flex: 1 1 48%;
+  }
+}
+
+/* Mobile – 1 card */
+@media (max-width: 599px) {
+  .dash-card {
+    flex: 1 1 100%;
+  }
+}
