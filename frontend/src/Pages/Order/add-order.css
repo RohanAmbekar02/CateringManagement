@@ -67,3 +67,6 @@
     font-weight: bold;
     cursor: pointer;
 }
+.text-end{
+    text-align: end;
+}
