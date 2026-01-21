@@ -3,10 +3,10 @@ import {
   Box, Typography, TextField, IconButton, Button,
   Table, TableBody, TableCell, TableHead,
   TableRow, TableContainer, Paper,
-  Stack, Chip, Select, MenuItem, useMediaQuery
+  Stack, Chip, Select, MenuItem, useMediaQuery, Dialog, DialogContent, DialogTitle, DialogActions
 } from "@mui/material";
-import { Search, Add, Edit, Delete, NavigateBefore, NavigateNext } from "@mui/icons-material";
-
+import { Search, Add, Edit, Delete, NavigateBefore, NavigateNext, Close } from "@mui/icons-material";
+import AddItem from "./add-item"; 
 /* ---------- DATA ---------- */
 const itemsData = [
   { id: 1, name: "Mixing Bowl", price: 500 },
@@ -33,7 +33,7 @@ export default function Items() {
   
   const [searchInput, setSearchInput] = useState("");
   const [searchQuery, setSearchQuery] = useState("");
-
+  const [openAddItem, setOpenAddItem] = useState(false);
 
   const [page, setPage] = useState(1);
   const [rowsPerPage, setRowsPerPage] = useState(6);
@@ -69,6 +69,7 @@ export default function Items() {
         {/* ---------- ADD BUTTON ---------- */}
         <Button
           startIcon={<Add />}
+           onClick={() => setOpenAddItem(true)}
           sx={{
             bgcolor: PRIMARY,
             color: "#fff",
@@ -88,7 +89,7 @@ export default function Items() {
       </Box>
 
       {/* ---------- SEARCH ---------- */}
-      <Box sx={{ display: "flex", gap: 1, mb: 3, maxWidth: 380 }}>
+      <Box sx={{ display: "flex", gap: 1, mb: 3, maxWidth: 780 }}>
         <TextField
           size="small"
           placeholder="Search items"
@@ -251,6 +252,28 @@ export default function Items() {
           )}
         </Stack>
       )}
+      <Dialog 
+        open={openAddItem} 
+        onClose={() => setOpenAddItem(false)}
+        maxWidth="sm"
+        fullWidth
+        PaperProps={{
+          sx: {
+            borderRadius: "8px",
+            minWidth: "500px"
+          }
+        }}
+      >
+        <DialogTitle sx={{ display: "flex", justifyContent: "space-between", alignItems: "center", bgcolor: "#f2f2f2" }}>
+          Add New Item
+          <IconButton size="small" onClick={() => setOpenAddItem(false)}>
+            <Close />
+          </IconButton>
+        </DialogTitle>
+        <DialogContent sx={{ p: 3 }}>
+          <AddItem onClose={() => setOpenAddItem(false)} isDialog={true} />
+        </DialogContent>
+      </Dialog>
     </Box>
   );
 }
