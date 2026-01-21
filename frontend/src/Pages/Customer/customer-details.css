@@ -1,30 +1,124 @@
-.items-title {
-  font-weight: 700;
- 
+/* ---------- PAGE ---------- */
+.page-wrapper {
+  background: #ffffff;
+  min-height: 100vh;
+  overflow-x: hidden;
 }
 
-.action-col {
-    width: 150px;
-  text-align: center;
-}
-
-/* BUTTON WRAPPER */
-.action-btns {
+/* ---------- HEADER ---------- */
+.header-bar {
   display: flex;
-  justify-content: center;
+  justify-content: space-between;
   align-items: center;
-  gap: 12px;              /* space between buttons */
+}
+.table-header {
+  font-weight: bold;
 }
 
-/* RESPONSIVE */
+/* ---------- SEARCH ---------- */
+.search-row {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+.search-icon-btn {
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  background: #1f3a8a;
+  color: #fff;
+}
+
+.search-icon-btn:hover {
+  background: #1e40af;
+}
+
+.search-input {
+  background: #fff !important;
+  border-radius: 12px;
+  flex: 1;
+}
+
+/* ---------- ADD BUTTON ---------- */
+.add-btn {
+  height: 46px;
+  border-radius: 20px;
+  background: linear-gradient(135deg, #1f3a8a);
+  color: #fff !important;
+  box-shadow: 0 8px 20px rgba(31, 58, 138, 0.35);
+  transition: 0.25s ease;
+}
+
+.add-btn:hover {
+  transform: translateY(-2px) scale(1.08);
+}
+
+/* ---------- TABLE ---------- */
+.table-container {
+  border-radius: 16px;
+  border: 1px solid #e1e7f5;
+  overflow-x: hidden;
+}
+
+.MuiTable-root {
+  width: 100%;
+  table-layout: fixed;
+}
+
+.MuiTableCell-root {
+  font-size: 14px;
+  border-bottom: 1px solid #e1e7f5;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* ---------- MOBILE CARDS ---------- */
+.mobile-card {
+  border: 1px solid #e1e7f5;
+  border-radius: 14px;
+  padding: 14px;
+  box-shadow: 0 6px 14px rgba(0, 0, 0, 0.06);
+}
+
+/* ---------- PAGINATION ---------- */
+.page-btn:hover {
+  background: #f5f8ff;
+  transform: scale(1.1);
+}
+
+/* ---------- RESPONSIVE ---------- */
 @media (max-width: 768px) {
-  .action-btns {
+  .search-row {
     gap: 8px;
+  }
+
+  .add-btn {
+    height: 40px;
+  }
+
+  .MuiTableCell-root {
+    font-size: 12px;
+    padding: 8px;
   }
 }
 
 @media (max-width: 480px) {
-  .action-btns {
-    gap: 6px;
+  .header-bar {
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .add-btn {
+    width: 100%;
+  }
+
+  .search-row {
+    flex-direction: column;
+  }
+
+  .search-input {
+    width: 100% !important;
   }
 }

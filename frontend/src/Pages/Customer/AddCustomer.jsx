@@ -1,92 +1,106 @@
 import React, { useState } from "react";
 import "./AddCustomer.css";
 
-function AddCustomer({ closePopup }) {
-  const [name, setName] = useState("");
-  const [phone, setPhone] = useState("");
-  const [nameError, setNameError] = useState("");
-  const [phoneError, setPhoneError] = useState("");
+const AddCustomer = ({ onClose }) => {
+  const [customerName, setCustomerName] = useState("");
+  const [mobileNumber, setMobileNumber] = useState("");
 
-  const handleSubmit = () => {
-    let valid = true;
+  const [errors, setErrors] = useState({
+    customerName: "",
+    mobileNumber: "",
+  });
 
-    if (name === "") {
-      setNameError("Please fill name");
-      valid = false;
+  const handleSubmit = (e) => {
+    e.preventDefault();
+
+    let newErrors = { customerName: "", mobileNumber: "" };
+    let isValid = true;
+
+    if (!customerName.trim()) {
+      newErrors.customerName = "Customer name is required";
+      isValid = false;
     }
 
-    if (phone === "") {
-      setPhoneError("Please fill contact number");
-      valid = false;
+    if (!mobileNumber) {
+      newErrors.mobileNumber = "Mobile number is required";
+      isValid = false;
+    } else if (!/^\d{10}$/.test(mobileNumber)) {
+      newErrors.mobileNumber = "Mobile number must be 10 digits";
+      isValid = false;
     }
 
-    if (!valid) return;
+    setErrors(newErrors);
+    if (!isValid) return;
 
-    alert("Customer Added Successfully!");
-    closePopup();
-    setName("");
-    setPhone("");
-    setNameError("");
-    setPhoneError("");
+    console.log({ customerName, mobileNumber });
+
+    setCustomerName("");
+    setMobileNumber("");
+    setErrors({ customerName: "", mobileNumber: "" });
+
+    if (onClose) onClose();
   };
 
   const handleReset = () => {
-    setName("");
-    setPhone("");
-    setNameError("");
-    setPhoneError("");
+    setCustomerName("");
+    setMobileNumber("");
+    setErrors({ customerName: "", mobileNumber: "" });
   };
 
   return (
-    <div className="modal-bg">
-      <div className="modal-box">
-        <div className="modal-header">
-          <h3>Add New Customer</h3>
-          <span className="close-btn" onClick={closePopup}>×</span>
+    <form onSubmit={handleSubmit}>
+      <div style={{ display: "flex", gap: "15px", mb: 2 }}>
+        {/* Customer Name */}
+        <div className="field-wrapper" style={{ flex: 1 }}>
+          <input
+            className="form-control mb-2 mt-3"
+            type="text"
+            placeholder="Enter Name *"
+            value={customerName}
+            onChange={(e) => {
+              setCustomerName(e.target.value);
+              if (e.target.value.trim()) {
+                setErrors((prev) => ({ ...prev, customerName: "" }));
+              }
+            }}
+            style={{ width: "100%" }}
+          />
+          {errors.customerName && (
+            <span className="error-text">{errors.customerName}</span>
+          )}
         </div>
 
-        <div className="modal-body">
-
-          <div className="field">
-            <input
-              type="text"
-              placeholder="Enter Name *"
-              value={name}
-              onChange={(e) => {
-                setName(e.target.value);
-                setNameError("");
-              }}
-            />
-            {nameError && <p className="error-text">{nameError}</p>}
-          </div>
-
-          <div className="field">
-            <input
-              type="text"
-              placeholder="Enter Phone *"
-              value={phone}
-              onChange={(e) => {
-                setPhone(e.target.value);
-                setPhoneError("");
-              }}
-            />
-            {phoneError && <p className="error-text">{phoneError}</p>}
-          </div>
-
-        </div>
-
-        <div className="modal-footer">
-          <button className="submit-btn" onClick={handleSubmit}>
-            Submit
-          </button>
-
-          <button className="reset-btn" onClick={handleReset}>
-            Reset
-          </button>
+        {/* Mobile Number */}
+        <div className="field-wrapper" style={{ flex: 1 }}>
+          <input
+            className="form-control mb-2 mt-3"
+            type="tel"
+            placeholder="Enter Mobile *"
+            value={mobileNumber}
+            onChange={(e) => {
+              setMobileNumber(e.target.value);
+              if (/^\d{10}$/.test(e.target.value)) {
+                setErrors((prev) => ({ ...prev, mobileNumber: "" }));
+              }
+            }}
+            style={{ width: "100%" }}
+          />
+          {errors.mobileNumber && (
+            <span className="error-text">{errors.mobileNumber}</span>
+          )}
         </div>
       </div>
-    </div>
+
+      <div style={{ display: "flex", gap: "15px", justifyContent: "center", marginTop: "20px" }}>
+        <button type="submit" className="btn-1 submit-btn" style={{ width: "45%" }}>
+          <p className="sub-text">Submit</p>
+        </button>
+        <button type="button" className="btn-1 reset-btn" onClick={handleReset} style={{ width: "45%" }}>
+          <p className="sub-text">Reset</p>
+        </button>
+      </div>
+    </form>
   );
-}
+};
 
 export default AddCustomer;

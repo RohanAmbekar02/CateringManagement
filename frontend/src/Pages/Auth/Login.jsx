@@ -10,7 +10,7 @@ const Login = () => {
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
 
-  // Hardcoded static credentials
+ 
   const staticUser = {
     contact: '9146070379',
     password: 'admin123'
@@ -90,7 +90,7 @@ const Login = () => {
             />
           </div>
 
-          {/* Password input */}
+        
           <div className="input-group" style={{ position: 'relative', marginBottom: '15px' }}>
             <Lock
               size={20}
