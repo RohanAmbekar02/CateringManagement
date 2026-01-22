@@ -1,84 +1,172 @@
 import React, { useState } from "react";
-import AddOrder from "./add-order";
-import "./details.css"; 
+import "./details.css";
 import { useNavigate } from "react-router-dom";
+import ReceiptIcon from "@mui/icons-material/Receipt";
+import { Edit, Delete, Call } from "@mui/icons-material";
+import PersonIcon from "@mui/icons-material/Person";
+
 export default function Details() {
-  const [showAddOrder, setShowAddOrder] = useState(false); // state to toggle form
   const navigate = useNavigate();
+
+  //  STATES
+  const [filter, setFilter] = useState("all");
+  const [search, setSearch] = useState("");
+
+  //  ORDERS DATA
+  const orders = [
+    {
+      id: 1,
+      name: "Rohan Lakshman Dhorkule",
+      total: 4990,
+      remaining: 4990,
+      status: "pending",
+    },
+    {
+      id: 2,
+      name: "Todmal Snehal Sachin",
+      total: 4950,
+      remaining: 0,
+      status: "paid",
+    },
+    {
+      id: 3,
+      name: "Udage Pratiksha Subhash",
+      total: 6500,
+      remaining: 6500,
+      status: "pending",
+    },
+    {
+      id: 4,
+      name: "Suse Vaishnavi Ambadas",
+      total: 7200,
+      remaining: 0,
+      status: "paid",
+    },
+  ];
+
+  //  SEARCH + FILTER LOGIC
+  const filteredOrders = orders.filter(order => {
+    const matchStatus =
+      filter === "all" || order.status === filter;
+
+    const matchSearch =
+      order.name.toLowerCase().includes(search.toLowerCase());
+
+    return matchStatus && matchSearch;
+  });
+
+  //  STATUS CAPITAL FUNCTION
+  const capitalizeStatus = status =>
+    status.charAt(0).toUpperCase() + status.slice(1);
+
   return (
-    <div className="page shadow ml-5">
-
-
+    <div className="page shadow container-fluid">
       <h2 className="page-title ml-2">Orders</h2>
 
+      {/*  SEARCH */}
       <div className="search-row">
-        <div className="search-box ">
+        <div className="search-box">
           <i className="fa-solid fa-magnifying-glass"></i>
-          <input placeholder="Search by customer name..." />
+          <input
+            placeholder="Search by customer name..."
+            value={search}
+            onChange={e => setSearch(e.target.value)}
+          />
         </div>
-        {/* Toggle AddOrder form */}
-        <button className="add-btn" onClick={() => navigate("/add-order")}>
-      +
-    </button>  </div>
 
-      {/* Render AddOrder form if showAddOrder is true */}
-      {showAddOrder && (
-        <div className="mt-3">
-          <AddOrder />
-          <button
-            className="btn btn-secondary mt-2"
-            onClick={() => setShowAddOrder(false)}
-          >
-            Close
-          </button>
-        </div>
-      )}
 
-      <div className="filters">
-        <button className="filter active">All</button>
-        <button className="filter">
-          <i className="fa-sharp fa-solid fa-circle-check text-success"></i> Paid
+        <button
+          className="add-item-btn"
+          onClick={() => navigate("/add-order")}
+        >
+          <span className="plus">+</span>
+          <span>Add Order</span>
         </button>
-        <button className="filter">
+
+      </div>
+
+      {/*  FILTER BUTTONS */}
+      <div className="filters">
+        <button
+          className={`filter ${filter === "all" ? "active" : ""}`}
+          onClick={() => setFilter("all")}
+        >
+          All
+        </button>
+
+        <button
+          className={`filter ${filter === "paid" ? "active" : ""}`}
+          onClick={() => setFilter("paid")}
+        >
+          <i className="fa-solid fa-circle-check text-success"></i> Paid
+        </button>
+
+        <button
+          className={`filter ${filter === "pending" ? "active" : ""}`}
+          onClick={() => setFilter("pending")}
+        >
           <i className="fa-solid fa-clock text-warning"></i> Pending
         </button>
       </div>
 
-      {["धुमताळी", "कडवडी", "नवत तळी"].map((place, i) => (
-        <div className="order-card shadow" key={i}>
-          <div>
-            <div className="order-title">🔒 मुख्याध्यापक, कि. प. प. शाळा, पुणे</div>
-            <div className="green">
-              ₹ Total amount: ₹ {i === 2 ? "6500.00" : i === 1 ? "4950.00" : "4990.00"}
+      {/*  ORDER CARDS */}
+      {filteredOrders.length === 0 ? (
+        <p style={{ marginTop: 20 }}>No orders found</p>
+      ) : (
+        filteredOrders.map(order => (
+          <div key={order.id} className="order-card shadow">
+            <div>
+              <div className="order-title">
+                <button className="icon user-icon">
+                  <PersonIcon />
+                </button>
+                {order.name}
+              </div>
+
+              <div className="green">
+                ₹ Total amount: ₹ {order.total}.00
+              </div>
+
+              <div className="red">
+                ₹ Remaining amount: ₹ {order.remaining}.00
+              </div>
             </div>
-            <div className="red">
-              ₹ Remaining amount: ₹ {i === 2 ? "6500.00" : i === 1 ? "4950.00" : "4990.00"}
+
+            <div className="actions">
+              <button
+                className={
+                  order.status === "paid"
+                    ? "status-btn paid"
+                    : "status-btn pending"
+                }
+              >
+                {capitalizeStatus(order.status)}
+              </button>
+
+              <button
+                className="icon book-icon"
+                onClick={() => navigate("/review")}
+              >
+                <ReceiptIcon />
+              </button>
+
+              <button className="icon phone-icon">
+                <Call />
+              </button>
+
+              <button className="icon delete-icon">
+                <Delete />
+              </button>
+
+              <button className="icon pencil-icon">
+                <Edit />
+              </button>
+
+              <span className="dots">...</span>
             </div>
           </div>
-
-
-
-          <div className="actions">
-            <span className="pending-btn">Pending</span>
-
-            <button className="icon blue mt-5 book-icon">
-              <i className="fa-solid fa-book text-primary"></i>
-            </button>
-
-            <button className="icon teal mt-5 text-success phone-icon"><i class="fa-solid fa-phone"></i></button>
-
-            <button className="icon red mt-5 delect-icon">
-              <i className="fa-solid fa-trash"></i>
-            </button>
-
-            <button className="icon sky mt-5 text-primary pencil-icon"><i class="fa-solid fa-pencil"></i></button>
-
-            <span className="gray mt-5">. . .</span>
-          </div>
-
-
-        </div>
-      ))}
+        ))
+      )}
     </div>
   );
 }

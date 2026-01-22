@@ -30,7 +30,7 @@ const BG_LIGHT = "#f5f8ff";
 export default function Items() {
   const isMobile = useMediaQuery("(max-width:768px)");
 
-  
+
   const [searchInput, setSearchInput] = useState("");
   const [searchQuery, setSearchQuery] = useState("");
 
@@ -38,7 +38,7 @@ export default function Items() {
   const [page, setPage] = useState(1);
   const [rowsPerPage, setRowsPerPage] = useState(6);
 
-  
+
   const filteredItems = useMemo(
     () =>
       itemsData.filter(item =>
@@ -96,7 +96,7 @@ export default function Items() {
           onChange={(e) => setSearchInput(e.target.value)}
           sx={{
             flex: 1,
-           
+
             borderRadius: "10px"
           }}
         />
