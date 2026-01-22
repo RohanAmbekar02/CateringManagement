@@ -142,7 +142,7 @@ export default function Items() {
             <Table sx={{ tableLayout: "fixed" }}>
               <TableHead sx={{ bgcolor: "#fff" }}>
                 <TableRow>
-                  <TableCell sx={{ fontWeight: 700 }}>#</TableCell>
+                  <TableCell sx={{ fontWeight: 700 }}>S.No.</TableCell>
                   <TableCell sx={{ fontWeight: 700 }}>Name</TableCell>
                   <TableCell sx={{ fontWeight: 700 }}>Price</TableCell>
                   <TableCell sx={{ fontWeight: 700, textAlign: "center" }}>Actions</TableCell>
