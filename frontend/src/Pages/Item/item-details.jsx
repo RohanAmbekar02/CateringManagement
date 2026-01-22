@@ -3,10 +3,12 @@ import {
   Box, Typography, TextField, IconButton, Button,
   Table, TableBody, TableCell, TableHead,
   TableRow, TableContainer, Paper,
-  Stack, Chip, Select, MenuItem, useMediaQuery, Dialog, DialogContent, DialogTitle, DialogActions
+  Stack, Chip, Select, MenuItem, useMediaQuery,
+  Dialog, DialogContent, DialogTitle, InputAdornment
 } from "@mui/material";
 import { Search, Add, Edit, Delete, NavigateBefore, NavigateNext, Close } from "@mui/icons-material";
 import AddItem from "./add-item"; 
+
 /* ---------- DATA ---------- */
 const itemsData = [
   { id: 1, name: "Mixing Bowl", price: 500 },
@@ -30,7 +32,6 @@ const BG_LIGHT = "#f5f8ff";
 export default function Items() {
   const isMobile = useMediaQuery("(max-width:768px)");
 
-  
   const [searchInput, setSearchInput] = useState("");
   const [searchQuery, setSearchQuery] = useState("");
   const [openAddItem, setOpenAddItem] = useState(false);
@@ -38,7 +39,6 @@ export default function Items() {
   const [page, setPage] = useState(1);
   const [rowsPerPage, setRowsPerPage] = useState(6);
 
-  
   const filteredItems = useMemo(
     () =>
       itemsData.filter(item =>
@@ -69,7 +69,7 @@ export default function Items() {
         {/* ---------- ADD BUTTON ---------- */}
         <Button
           startIcon={<Add />}
-           onClick={() => setOpenAddItem(true)}
+          onClick={() => setOpenAddItem(true)}
           sx={{
             bgcolor: PRIMARY,
             color: "#fff",
@@ -94,31 +94,38 @@ export default function Items() {
           size="small"
           placeholder="Search items"
           value={searchInput}
-          onChange={(e) => setSearchInput(e.target.value)}
-          sx={{
-            flex: 1,
-           
-            borderRadius: "10px"
+          onChange={(e) => {
+            setSearchInput(e.target.value);
+            setSearchQuery(e.target.value); // instant search
+            setPage(1);
+          }}
+          sx={{ flex: 1, borderRadius: "10px" }}
+          InputProps={{
+            startAdornment: (
+              <InputAdornment position="start">
+                <Search sx={{ color: "#9ca3af" }} />
+              </InputAdornment>
+            ),
+            endAdornment: searchInput && (
+              <InputAdornment position="end">
+                <IconButton
+                  size="small"
+                  onClick={() => {
+                    setSearchInput("");
+                    setSearchQuery("");
+                    setPage(1);
+                  }}
+                  sx={{
+                    color: "#9ca3af",
+                    "&:hover": { color: PRIMARY_HOVER },
+                  }}
+                >
+                  <Close fontSize="small" />
+                </IconButton>
+              </InputAdornment>
+            )
           }}
         />
-
-        <IconButton
-          onClick={() => { setSearchQuery(searchInput); setPage(1); }}
-          sx={{
-            bgcolor: PRIMARY,
-            color: "#fff",
-            width: 40,
-            height: 40,
-            borderRadius: "10px",
-            "&:hover": {
-              bgcolor: PRIMARY_HOVER,
-              transform: "scale(1.05)"
-            },
-            transition: "0.25s"
-          }}
-        >
-          <Search />
-        </IconButton>
       </Box>
 
       {/* ---------- CONTENT ---------- */}
@@ -181,7 +188,7 @@ export default function Items() {
           </TableContainer>
 
           {/* ---------- PAGINATION ---------- */}
-          <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "center", mt: 2 }}>
+          <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "center", mt: 2 ,mb:5}}>
             <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
               <Typography variant="caption">Items per page:</Typography>
               <Select
