@@ -1,10 +1,10 @@
-
 import { useState, useMemo } from "react";
 import {
   Box, Typography, TextField, IconButton, Button,
   Table, TableBody, TableCell, TableHead,
   TableRow, TableContainer, Paper,
-  Stack, Chip, Select, MenuItem, useMediaQuery, Dialog, DialogContent, DialogTitle
+  Stack, Chip, Select, MenuItem, useMediaQuery, 
+  Dialog, DialogContent, DialogTitle, InputAdornment
 } from "@mui/material";
 import { Search, Add, Edit, Delete, NavigateBefore, NavigateNext, Close } from "@mui/icons-material";
 import AddCustomer from "./AddCustomer";
@@ -22,14 +22,13 @@ const customersData = [
   { id: 9, name: "Vikram Kumar", mobile: "9765432109", status: "Inactive" }
 ];
 
-/* ---------- COLORS ---------- */
 const PRIMARY = "#1f3a8a";
 const PRIMARY_HOVER = "#1e40af";
 const BORDER = "#e1e7f5";
 const BG_LIGHT = "#f5f8ff";
 
 export default function Customers() {
-  const isMobile = useMediaQuery("(max-width:768px)");
+  const isMobile = useMediaQuery("(max-width:600px)");
 
   const [searchInput, setSearchInput] = useState("");
   const [searchQuery, setSearchQuery] = useState("");
@@ -52,225 +51,131 @@ export default function Customers() {
   const currentCustomers = filteredCustomers.slice(startIndex, startIndex + rowsPerPage);
 
   return (
-    <Box sx={{ p: 3, bgcolor: "#fff", minHeight: "100vh" }}>
+    <Box sx={{ p: isMobile ? 2 : 3, bgcolor: "#fff", minHeight: "100vh" }}>
       {/* ---------- HEADER ---------- */}
-      <Box
-        sx={{
-          display: "flex",
-          justifyContent: "space-between",
-          alignItems: "center",
-          mb: 2
-        }}
-      >
-        <Typography variant="h5" fontWeight={700} color={PRIMARY}>
+      <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "center", mb: 2 }}>
+        <Typography variant={isMobile ? "h6" : "h5"} fontWeight={700} color={PRIMARY}>
           Customers
         </Typography>
 
-        {/* ---------- ADD BUTTON ---------- */}
         <Button
+          variant="contained"
           startIcon={<Add />}
           onClick={() => setOpenAddCustomer(true)}
           sx={{
             bgcolor: PRIMARY,
-            color: "#fff",
             textTransform: "none",
-            fontWeight: 600,
             borderRadius: "10px",
-            px: 2.5,
-            "&:hover": {
-              bgcolor: PRIMARY_HOVER,
-              transform: "scale(1.04)"
-            },
-            transition: "0.25s"
+            fontSize: isMobile ? "0.8rem" : "0.9rem",
+            "&:hover": { bgcolor: PRIMARY_HOVER }
           }}
         >
-          Add Customer
+          {isMobile ? "Add" : "Add Customer"}
         </Button>
       </Box>
 
-      {/* ---------- SEARCH ---------- */}
-      <Box sx={{ display: "flex", gap: 1, mb: 3,  maxWidth: 780 }}>
+      {/* ---------- SEARCH WITH CROSS BUTTON ---------- */}
+      <Box sx={{ mb: 3, maxWidth: isMobile ? "100%" : 500 }}>
         <TextField
+          fullWidth
           size="small"
-          placeholder="Search customers by name or mobile"
+          placeholder="Search by name or mobile"
           value={searchInput}
-          onChange={(e) => setSearchInput(e.target.value)}
-          sx={{
-              flex: 1,
-            borderRadius: "10px"
+          onChange={(e) => {
+            setSearchInput(e.target.value);
+            setSearchQuery(e.target.value); // Instant search
+            setPage(1);
+          }}
+          InputProps={{
+            startAdornment: (
+              <InputAdornment position="start">
+                <Search sx={{ color: "#9ca3af" }} />
+              </InputAdornment>
+            ),
+            endAdornment: searchInput && (
+              <InputAdornment position="end">
+                <IconButton size="small" onClick={() => { setSearchInput(""); setSearchQuery(""); }}>
+                  <Close fontSize="small" />
+                </IconButton>
+              </InputAdornment>
+            )
           }}
         />
-
-        <IconButton
-          onClick={() => { setSearchQuery(searchInput); setPage(1); }}
-          sx={{
-            flex: "0 0 5%",
-            bgcolor: PRIMARY,
-            color: "#fff",
-            borderRadius: "10px",
-            "&:hover": {
-              bgcolor: PRIMARY_HOVER,
-              transform: "scale(1.05)"
-            },
-            transition: "0.25s"
-          }}
-        >
-          <Search />
-        </IconButton>
       </Box>
 
       {/* ---------- CONTENT ---------- */}
       {!isMobile ? (
-        <>
-          <TableContainer
-            component={Paper}
-            sx={{
-              border: `1px solid ${BORDER}`,
-              borderRadius: "14px",
-              overflowX: "hidden"
-            }}
-          >
-            <Table sx={{ tableLayout: "fixed" }}>
-              <TableHead sx={{ bgcolor: "#fff" }}>
-                <TableRow>
-                  <TableCell sx={{ fontWeight: 700 }}>#</TableCell>
-                  <TableCell sx={{ fontWeight: 700 }}>Name</TableCell>
-                  <TableCell sx={{ fontWeight: 700 }}>Mobile</TableCell>
-                  <TableCell sx={{ fontWeight: 700, textAlign: "center" }}>Actions</TableCell>
+        <TableContainer component={Paper} sx={{ border: `1px solid ${BORDER}`, borderRadius: "14px" }}>
+          <Table>
+            <TableHead sx={{ bgcolor: BG_LIGHT }}>
+              <TableRow>
+                <TableCell sx={{ fontWeight: 700 }}>#</TableCell>
+                <TableCell sx={{ fontWeight: 700 }}>Name</TableCell>
+                <TableCell sx={{ fontWeight: 700 }}>Mobile</TableCell>
+                <TableCell sx={{ fontWeight: 700, textAlign: "center" }}>Actions</TableCell>
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              {currentCustomers.map((customer, i) => (
+                <TableRow key={customer.id} hover>
+                  <TableCell>{startIndex + i + 1}</TableCell>
+                  <TableCell>{customer.name}</TableCell>
+                  <TableCell>{customer.mobile}</TableCell>
+                  <TableCell align="center">
+                    <IconButton sx={{ color: PRIMARY }}><Edit /></IconButton>
+                    <IconButton sx={{ color: "#dc2626" }}><Delete /></IconButton>
+                  </TableCell>
                 </TableRow>
-              </TableHead>
-
-              <TableBody>
-                {currentCustomers.map((customer, i) => (
-                  <TableRow key={customer.id} hover>
-                    <TableCell>{startIndex + i + 1}</TableCell>
-                    <TableCell>{customer.name}</TableCell>
-                    <TableCell>
-                      <Chip
-                        label={customer.mobile}
-                        size="small"
-                        sx={{
-                          bgcolor: BG_LIGHT,
-                          color: PRIMARY,
-                          fontWeight: 600
-                        }}
-                      />
-                    </TableCell>
-                    <TableCell align="center">
-                      <IconButton sx={{ color: PRIMARY }}>
-                        <Edit />
-                      </IconButton>
-                      <IconButton sx={{ color: "#dc2626" }}>
-                        <Delete />
-                      </IconButton>
-                    </TableCell>
-                  </TableRow>
-                ))}
-
-                {filteredCustomers.length === 0 && (
-                  <TableRow>
-                    <TableCell colSpan={4} align="center">
-                      No customers found
-                    </TableCell>
-                  </TableRow>
-                )}
-              </TableBody>
-            </Table>
-          </TableContainer>
-
-          {/* ---------- PAGINATION ---------- */}
-          <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "center", mt: 2 }}>
-            <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
-              <Typography variant="caption">Customers per page:</Typography>
-              <Select
-                size="small"
-                value={rowsPerPage}
-                onChange={(e) => { setRowsPerPage(Number(e.target.value)); setPage(1); }}
-              >
-                <MenuItem value={3}>3</MenuItem>
-                <MenuItem value={6}>6</MenuItem>
-                <MenuItem value={12}>12</MenuItem>
-              </Select>
-            </Box>
-
-            <Stack direction="row" spacing={1} alignItems="center">
-              <Typography variant="caption">{page} / {totalPages || 1}</Typography>
-              <IconButton size="small" disabled={page === 1} onClick={() => setPage(p => p - 1)}>
-                <NavigateBefore />
-              </IconButton>
-              <IconButton size="small" disabled={page >= totalPages} onClick={() => setPage(p => p + 1)}>
-                <NavigateNext />
-              </IconButton>
-            </Stack>
-          </Box>
-        </>
+              ))}
+            </TableBody>
+          </Table>
+        </TableContainer>
       ) : (
         /* ---------- MOBILE CARDS ---------- */
         <Stack spacing={2}>
-          {currentCustomers.map(customer => (
-            <Box
-              key={customer.id}
-              sx={{
-                border: `1px solid ${BORDER}`,
-                borderRadius: "14px",
-                p: 2
-              }}
-            >
+          {currentCustomers.map((customer, i) => (
+            <Box key={customer.id} sx={{ border: `1px solid ${BORDER}`, borderRadius: "14px", p: 2, position: "relative" }}>
+              <Typography variant="caption" color="text.secondary">#{startIndex + i + 1}</Typography>
               <Typography fontWeight={600}>{customer.name}</Typography>
-              <Typography color="text.secondary">
-                📱 {customer.mobile}
-              </Typography>
-
-              <Stack direction="row" spacing={1} mt={1}>
-                <IconButton sx={{ color: PRIMARY }}>
-                  <Edit />
-                </IconButton>
-                <IconButton sx={{ color: "#dc2626" }}>
-                  <Delete />
-                </IconButton>
-              </Stack>
+              <Typography color="text.secondary" variant="body2">📱 {customer.mobile}</Typography>
+              
+              <Box sx={{ position: "absolute", top: 10, right: 10 }}>
+                <IconButton size="small" sx={{ color: PRIMARY }}><Edit fontSize="small" /></IconButton>
+                <IconButton size="small" sx={{ color: "#dc2626" }}><Delete fontSize="small" /></IconButton>
+              </Box>
             </Box>
           ))}
-
-          {currentCustomers.length === 0 && (
-            <Typography align="center">No customers found</Typography>
-          )}
-
-          {/* Mobile Pagination */}
-          {!isMobile || filteredCustomers.length <= rowsPerPage ? null : (
-            <Stack direction="row" justifyContent="space-between" alignItems="center">
-              <IconButton size="small" disabled={page === 1} onClick={() => setPage(p => p - 1)}>
-                <NavigateBefore />
-              </IconButton>
-              <Typography variant="caption">{page} / {totalPages || 1}</Typography>
-              <IconButton size="small" disabled={page >= totalPages} onClick={() => setPage(p => p + 1)}>
-                <NavigateNext />
-              </IconButton>
-            </Stack>
-          )}
         </Stack>
       )}
 
-      {/* ---------- ADD CUSTOMER MODAL ---------- */}
+      {/* ---------- PAGINATION ---------- */}
+      <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "center", mt: 3, mb: 4 }}>
+        {!isMobile && (
+          <Select size="small" value={rowsPerPage} onChange={(e) => setRowsPerPage(Number(e.target.value))}>
+            <MenuItem value={6}>6 Rows</MenuItem>
+            <MenuItem value={12}>12 Rows</MenuItem>
+          </Select>
+        )}
+        <Stack direction="row" spacing={1} alignItems="center">
+          <Typography variant="caption">{page} / {totalPages || 1}</Typography>
+          <IconButton size="small" disabled={page === 1} onClick={() => setPage(p => p - 1)}><NavigateBefore /></IconButton>
+          <IconButton size="small" disabled={page >= totalPages} onClick={() => setPage(p => p + 1)}><NavigateNext /></IconButton>
+        </Stack>
+      </Box>
+
+      {/* ---------- RESPONSIVE DIALOG ---------- */}
       <Dialog 
         open={openAddCustomer} 
         onClose={() => setOpenAddCustomer(false)}
-        maxWidth="sm"
         fullWidth
-        PaperProps={{
-          sx: {
-            borderRadius: "8px",
-            minWidth: "500px"
-          }
-        }}
+        maxWidth="sm"
+        fullScreen={isMobile}
       >
         <DialogTitle sx={{ display: "flex", justifyContent: "space-between", alignItems: "center", bgcolor: "#f2f2f2" }}>
           Add New Customer
-          <IconButton size="small" onClick={() => setOpenAddCustomer(false)}>
-            <Close />
-          </IconButton>
+          <IconButton onClick={() => setOpenAddCustomer(false)}><Close /></IconButton>
         </DialogTitle>
-        <DialogContent sx={{ p: 3 }}>
+        <DialogContent sx={{ p: isMobile ? 2 : 3 }}>
           <AddCustomer onClose={() => setOpenAddCustomer(false)} isDialog={true} />
         </DialogContent>
       </Dialog>

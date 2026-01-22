@@ -1,18 +1,18 @@
 import React, { useState } from "react";
-import "./add-item.css";
+// Necessary imports for a professional UI
+import { Box, Typography, Button, Stack, useMediaQuery, useTheme } from "@mui/material";
+import { Inventory, CurrencyRupee, Save, RotateLeft } from "@mui/icons-material";
 
 const AddItem = ({ onClose, isDialog = false }) => {
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
+
   const [itemName, setItemName] = useState("");
   const [price, setPrice] = useState("");
-
-  const [errors, setErrors] = useState({
-    itemName: "",
-    price: "",
-  });
+  const [errors, setErrors] = useState({ itemName: "", price: "" });
 
   const handleSubmit = (e) => {
     e.preventDefault();
-
     let newErrors = { itemName: "", price: "" };
     let isValid = true;
 
@@ -21,11 +21,8 @@ const AddItem = ({ onClose, isDialog = false }) => {
       isValid = false;
     }
 
-    if (!price) {
-      newErrors.price = "Price is required";
-      isValid = false;
-    } else if (price <= 0) {
-      newErrors.price = "Price must be greater than 0";
+    if (!price || price <= 0) {
+      newErrors.price = "Valid price is required";
       isValid = false;
     }
 
@@ -33,12 +30,6 @@ const AddItem = ({ onClose, isDialog = false }) => {
     if (!isValid) return;
 
     console.log({ itemName, price });
-
-    
-    setItemName("");
-    setPrice("");
-    setErrors({ itemName: "", price: "" });
-
     if (onClose) onClose();
   };
 
@@ -48,132 +39,123 @@ const AddItem = ({ onClose, isDialog = false }) => {
     setErrors({ itemName: "", price: "" });
   };
 
+  // Modern Input Styling (Same as AddCustomer)
+  const inputContainerStyle = (hasError) => ({
+    width: "100%",
+    position: "relative",
+    display: "flex",
+    alignItems: "center",
+    backgroundColor: "#f9fafb",
+    border: `2px solid ${hasError ? "#ef4444" : "#e5e7eb"}`,
+    borderRadius: "12px",
+    transition: "all 0.3s ease",
+    "&:focus-within": {
+      borderColor: "#1f3a8a",
+      backgroundColor: "#fff",
+      boxShadow: "0 0 0 4px rgba(31, 58, 138, 0.1)",
+    }
+  });
+
   return (
-    <>
-      {!isDialog ? (
-        <div className="overlay">
-          <div className="modal-box">
-            <div className="modal-header">
-              <h4 className="add-head p-2">Add New Item</h4>
-              <span className="close-btn" onClick={onClose}>×</span>
-            </div>
+    <Box component="form" onSubmit={handleSubmit} sx={{ mt: 1, width: "100%" }}>
+      <Typography variant="body2" sx={{ mb: 3, color: "#6b7280" }}>
+        Please enter the item details below.
+      </Typography>
 
-            <form className="modal-body" onSubmit={handleSubmit}>
-
-          {/* Item Name */}
-          <div className="field-wrapper">
+      {/* Input Section - Row for Desktop, Column for Mobile */}
+      <Stack direction={isMobile ? "column" : "row"} spacing={3} sx={{ mb: 4 }}>
+        
+        {/* Item Name */}
+        <Box sx={{ flex: 1 }}>
+          <Typography sx={{ fontSize: "14px", fontWeight: "600", mb: 1, color: "#374151" }}>
+            Item Name *
+          </Typography>
+          <Box sx={inputContainerStyle(errors.itemName)}>
+            <Inventory sx={{ ml: 1.5, color: "#9ca3af", fontSize: "20px" }} />
             <input
-              className="form-control mb-2"
               type="text"
-              placeholder="Enter Name *"
+              placeholder="e.g. Mixing Bowl"
               value={itemName}
-              onChange={(e) => {
-                setItemName(e.target.value);
-
-                if (e.target.value.trim()) {
-                  setErrors((prev) => ({ ...prev, itemName: "" }));
-                }
+              onChange={(e) => setItemName(e.target.value)}
+              style={{
+                border: "none",
+                outline: "none",
+                padding: "12px",
+                width: "100%",
+                background: "transparent",
+                fontSize: "15px",
+                color: "#000"
               }}
             />
+          </Box>
+          {errors.itemName && (
+            <Typography sx={{ color: "#ef4444", fontSize: "12px", mt: 0.5 }}>{errors.itemName}</Typography>
+          )}
+        </Box>
 
-            {errors.itemName && (
-              <span className="error-text">{errors.itemName}</span>
-            )}
-          </div>
-
-          {/* Price */}
-          <div className="field-wrapper">
+        {/* Item Price */}
+        <Box sx={{ flex: 1 }}>
+          <Typography sx={{ fontSize: "14px", fontWeight: "600", mb: 1, color: "#374151" }}>
+            Price (₹) *
+          </Typography>
+          <Box sx={inputContainerStyle(errors.price)}>
+            <CurrencyRupee sx={{ ml: 1.5, color: "#9ca3af", fontSize: "20px" }} />
             <input
-              className="form-control mb-2 "
               type="number"
-              placeholder="Enter Price *"
+              placeholder="0.00"
               value={price}
-              onChange={(e) => {
-                setPrice(e.target.value);
-
-                if (e.target.value > 0) {
-                  setErrors((prev) => ({ ...prev, price: "" }));
-                }
+              onChange={(e) => setPrice(e.target.value)}
+              style={{
+                border: "none",
+                outline: "none",
+                padding: "12px",
+                width: "100%",
+                background: "transparent",
+                fontSize: "15px",
+                color: "#000"
               }}
             />
+          </Box>
+          {errors.price && (
+            <Typography sx={{ color: "#ef4444", fontSize: "12px", mt: 0.5 }}>{errors.price}</Typography>
+          )}
+        </Box>
+      </Stack>
 
-            {errors.price && (
-              <span className="error-text">{errors.price}</span>
-            )}
-          </div>
-
-          <div className="btn-container">
-            <button type="submit" className="btn-1 submit-btn ">
-              <p className="sub-text">Submit</p>
-            </button>
-
-            <button
-              type="button"
-              className="btn-1 reset-btn"
-              onClick={handleReset}
-            >
-              <p className="sub-text ">Reset</p>
-            </button>
-          </div>
-
-        </form>
-        </div>
-      </div>
-      ) : (
-        <form onSubmit={handleSubmit}>
-          <div style={{ display: "flex", gap: "15px", mb: 2 }}>
-            {/* Item Name */}
-            <div className="field-wrapper" style={{ flex: 1 }}>
-              <input
-                className="form-control mb-2 mt-3"
-                type="text"
-                placeholder="Enter Name *"
-                value={itemName}
-                onChange={(e) => {
-                  setItemName(e.target.value);
-                  if (e.target.value.trim()) {
-                    setErrors((prev) => ({ ...prev, itemName: "" }));
-                  }
-                }}
-                style={{ width: "100%" }}
-              />
-              {errors.itemName && (
-                <span className="error-text">{errors.itemName}</span>
-              )}
-            </div>
-
-            {/* Price */}
-            <div className="field-wrapper" style={{ flex: 1 }}>
-              <input
-                className="form-control mb-2 mt-3"
-                type="number"
-                placeholder="Enter Price *"
-                value={price}
-                onChange={(e) => {
-                  setPrice(e.target.value);
-                  if (e.target.value > 0) {
-                    setErrors((prev) => ({ ...prev, price: "" }));
-                  }
-                }}
-                style={{ width: "100%" }}
-              />
-              {errors.price && (
-                <span className="error-text">{errors.price}</span>
-              )}
-            </div>
-          </div>
-
-          <div style={{ display: "flex", gap: "15px", justifyContent: "center", marginTop: "20px" }}>
-            <button type="submit" className="btn-1 submit-btn" style={{ width: "45%" }}>
-              <p className="sub-text">Submit</p>
-            </button>
-            <button type="button" className="btn-1 reset-btn" onClick={handleReset} style={{ width: "45%" }}>
-              <p className="sub-text">Reset</p>
-            </button>
-          </div>
-        </form>
-      )}
-    </>
+      {/* Buttons Section */}
+      <Box sx={{ 
+        display: "flex", 
+        flexDirection: isMobile ? "column" : "row", 
+        gap: 2, 
+        justifyContent: "flex-end",
+        mt: 4
+      }}>
+        <Button
+          fullWidth={isMobile}
+          onClick={handleReset}
+          startIcon={<RotateLeft />}
+          sx={{ 
+            py: 1.5, px: 3, borderRadius: "10px", textTransform: "none", fontWeight: "600", color: "#4b5563",
+            border: "1px solid #d1d5db", "&:hover": { bgcolor: "#f3f4f6" } 
+          }}
+        >
+          Reset
+        </Button>
+        <Button
+          fullWidth={isMobile}
+          type="submit"
+          variant="contained"
+          startIcon={<Save />}
+          sx={{ 
+            py: 1.5, px: 5, borderRadius: "10px", textTransform: "none", fontWeight: "600", bgcolor: "#1f3a8a",
+            boxShadow: "0 4px 6px rgba(31, 58, 138, 0.2)",
+            "&:hover": { bgcolor: "#1e40af" } 
+          }}
+        >
+          Save Item
+        </Button>
+      </Box>
+    </Box>
   );
 };
 

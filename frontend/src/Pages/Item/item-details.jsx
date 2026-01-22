@@ -23,14 +23,14 @@ const itemsData = [
   { id: 10, name: "Soup Ladle", price: 300 }
 ];
 
-/* ---------- COLORS ---------- */
 const PRIMARY = "#1f3a8a";
 const PRIMARY_HOVER = "#1e40af";
 const BORDER = "#e1e7f5";
 const BG_LIGHT = "#f5f8ff";
 
 export default function Items() {
-  const isMobile = useMediaQuery("(max-width:768px)");
+  // मोबाइल डिटेक्शन (600px या उससे कम)
+  const isMobile = useMediaQuery("(max-width:600px)");
 
   const [searchInput, setSearchInput] = useState("");
   const [searchQuery, setSearchQuery] = useState("");
@@ -52,232 +52,137 @@ export default function Items() {
   const currentItems = filteredItems.slice(startIndex, startIndex + rowsPerPage);
 
   return (
-    <Box sx={{ p: 3, bgcolor: "#fff", minHeight: "100vh" }}>
+    <Box sx={{ p: isMobile ? 2 : 3, bgcolor: "#fff", minHeight: "100vh" }}>
       {/* ---------- HEADER ---------- */}
-      <Box
-        sx={{
-          display: "flex",
-          justifyContent: "space-between",
-          alignItems: "center",
-          mb: 2
-        }}
-      >
-        <Typography variant="h5" fontWeight={700} color={PRIMARY}>
+      <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "center", mb: 2 }}>
+        <Typography variant={isMobile ? "h6" : "h5"} fontWeight={700} color={PRIMARY}>
           Items
         </Typography>
 
-        {/* ---------- ADD BUTTON ---------- */}
         <Button
           startIcon={<Add />}
           onClick={() => setOpenAddItem(true)}
+          variant="contained"
           sx={{
             bgcolor: PRIMARY,
-            color: "#fff",
             textTransform: "none",
-            fontWeight: 600,
             borderRadius: "10px",
-            px: 2.5,
-            "&:hover": {
-              bgcolor: PRIMARY_HOVER,
-              transform: "scale(1.04)"
-            },
-            transition: "0.25s"
+            px: isMobile ? 1.5 : 2.5,
+            "&:hover": { bgcolor: PRIMARY_HOVER }
           }}
         >
-          Add Item
+          {isMobile ? "Add" : "Add Item"}
         </Button>
       </Box>
 
       {/* ---------- SEARCH ---------- */}
-      <Box sx={{ display: "flex", gap: 1, mb: 3, maxWidth: 780 }}>
-        <TextField
-          size="small"
-          placeholder="Search items"
-          value={searchInput}
-          onChange={(e) => {
-            setSearchInput(e.target.value);
-            setSearchQuery(e.target.value); // instant search
-            setPage(1);
-          }}
-          sx={{ flex: 1, borderRadius: "10px" }}
-          InputProps={{
-            startAdornment: (
-              <InputAdornment position="start">
-                <Search sx={{ color: "#9ca3af" }} />
-              </InputAdornment>
-            ),
-            endAdornment: searchInput && (
-              <InputAdornment position="end">
-                <IconButton
-                  size="small"
-                  onClick={() => {
-                    setSearchInput("");
-                    setSearchQuery("");
-                    setPage(1);
-                  }}
-                  sx={{
-                    color: "#9ca3af",
-                    "&:hover": { color: PRIMARY_HOVER },
-                  }}
-                >
-                  <Close fontSize="small" />
-                </IconButton>
-              </InputAdornment>
-            )
-          }}
-        />
-      </Box>
+   <Box sx={{ display: "flex", gap: 1, mb: 3, maxWidth: isMobile ? "100%" : 780 }}>
+  <TextField
+    size="small"
+    fullWidth
+    placeholder="Search items"
+    value={searchInput}
+    onChange={(e) => {
+      setSearchInput(e.target.value);
+      setSearchQuery(e.target.value);
+      setPage(1);
+    }}
+    sx={{ borderRadius: "10px" }}
+    InputProps={{
+      startAdornment: (
+        <InputAdornment position="start">
+          <Search sx={{ color: "#9ca3af" }} />
+        </InputAdornment>
+      ),
+      // --- CROSS BUTTON (CLEAR) वापस यहाँ है ---
+      endAdornment: searchInput && (
+        <InputAdornment position="end">
+          <IconButton
+            size="small"
+            onClick={() => {
+              setSearchInput("");
+              setSearchQuery("");
+              setPage(1);
+            }}
+            sx={{
+              color: "#9ca3af",
+              "&:hover": { color: PRIMARY_HOVER },
+            }}
+          >
+            <Close fontSize="small" />
+          </IconButton>
+        </InputAdornment>
+      )
+    }}
+  />
+</Box>
 
       {/* ---------- CONTENT ---------- */}
       {!isMobile ? (
-        <>
-          <TableContainer
-            component={Paper}
-            sx={{
-              border: `1px solid ${BORDER}`,
-              borderRadius: "14px",
-              overflowX: "hidden"
-            }}
-          >
-            <Table sx={{ tableLayout: "fixed" }}>
-              <TableHead sx={{ bgcolor: "#fff" }}>
-                <TableRow>
-                  <TableCell sx={{ fontWeight: 700 }}>S.No.</TableCell>
-                  <TableCell sx={{ fontWeight: 700 }}>Name</TableCell>
-                  <TableCell sx={{ fontWeight: 700 }}>Price</TableCell>
-                  <TableCell sx={{ fontWeight: 700, textAlign: "center" }}>Actions</TableCell>
+        <TableContainer component={Paper} sx={{ border: `1px solid ${BORDER}`, borderRadius: "14px" }}>
+          <Table>
+            <TableHead sx={{ bgcolor: BG_LIGHT }}>
+              <TableRow>
+                <TableCell sx={{ fontWeight: 700 }}>S.No.</TableCell>
+                <TableCell sx={{ fontWeight: 700 }}>Name</TableCell>
+                <TableCell sx={{ fontWeight: 700 }}>Price</TableCell>
+                <TableCell sx={{ fontWeight: 700, textAlign: "center" }}>Actions</TableCell>
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              {currentItems.map((item, i) => (
+                <TableRow key={item.id} hover>
+                  <TableCell>{startIndex + i + 1}</TableCell>
+                  <TableCell>{item.name}</TableCell>
+                  <TableCell>₹{item.price}</TableCell>
+                  <TableCell align="center">
+                    <IconButton sx={{ color: PRIMARY }}><Edit /></IconButton>
+                    <IconButton sx={{ color: "#dc2626" }}><Delete /></IconButton>
+                  </TableCell>
                 </TableRow>
-              </TableHead>
-
-              <TableBody>
-                {currentItems.map((item, i) => (
-                  <TableRow key={item.id} hover>
-                    <TableCell>{startIndex + i + 1}</TableCell>
-                    <TableCell>{item.name}</TableCell>
-                    <TableCell>
-                      <Chip
-                        label={`₹${item.price}`}
-                        size="small"
-                        sx={{
-                          bgcolor: BG_LIGHT,
-                          color: PRIMARY,
-                          fontWeight: 600
-                        }}
-                      />
-                    </TableCell>
-                    <TableCell align="center">
-                      <IconButton sx={{ color: PRIMARY }}>
-                        <Edit />
-                      </IconButton>
-                      <IconButton sx={{ color: "#dc2626" }}>
-                        <Delete />
-                      </IconButton>
-                    </TableCell>
-                  </TableRow>
-                ))}
-
-                {filteredItems.length === 0 && (
-                  <TableRow>
-                    <TableCell colSpan={4} align="center">
-                      No items found
-                    </TableCell>
-                  </TableRow>
-                )}
-              </TableBody>
-            </Table>
-          </TableContainer>
-
-          {/* ---------- PAGINATION ---------- */}
-          <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "center", mt: 2 ,mb:5}}>
-            <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
-              <Typography variant="caption">Items per page:</Typography>
-              <Select
-                size="small"
-                value={rowsPerPage}
-                onChange={(e) => { setRowsPerPage(Number(e.target.value)); setPage(1); }}
-              >
-                <MenuItem value={3}>3</MenuItem>
-                <MenuItem value={6}>6</MenuItem>
-                <MenuItem value={12}>12</MenuItem>
-              </Select>
-            </Box>
-
-            <Stack direction="row" spacing={1} alignItems="center">
-              <Typography variant="caption">{page} / {totalPages || 1}</Typography>
-              <IconButton size="small" disabled={page === 1} onClick={() => setPage(p => p - 1)}>
-                <NavigateBefore />
-              </IconButton>
-              <IconButton size="small" disabled={page >= totalPages} onClick={() => setPage(p => p + 1)}>
-                <NavigateNext />
-              </IconButton>
-            </Stack>
-          </Box>
-        </>
+              ))}
+            </TableBody>
+          </Table>
+        </TableContainer>
       ) : (
-        /* ---------- MOBILE CARDS ---------- */
         <Stack spacing={2}>
-          {currentItems.map(item => (
-            <Box
-              key={item.id}
-              sx={{
-                border: `1px solid ${BORDER}`,
-                borderRadius: "14px",
-                p: 2
-              }}
-            >
-              <Typography fontWeight={600}>{item.name}</Typography>
-              <Typography color="text.secondary">
-                ₹{item.price}
-              </Typography>
-
-              <Stack direction="row" spacing={1} mt={1}>
-                <IconButton sx={{ color: PRIMARY }}>
-                  <Edit />
-                </IconButton>
-                <IconButton sx={{ color: "#dc2626" }}>
-                  <Delete />
-                </IconButton>
-              </Stack>
+          {currentItems.map((item, i) => (
+            <Box key={item.id} sx={{ border: `1px solid ${BORDER}`, borderRadius: "12px", p: 2, position: "relative" }}>
+              <Typography variant="caption" color="text.secondary">#{startIndex + i + 1}</Typography>
+              <Typography fontWeight={600} variant="subtitle1">{item.name}</Typography>
+              <Typography color={PRIMARY} fontWeight={700}>₹{item.price}</Typography>
+              <Box sx={{ position: "absolute", top: 10, right: 10 }}>
+                 <IconButton size="small" sx={{ color: PRIMARY }}><Edit fontSize="small" /></IconButton>
+                 <IconButton size="small" sx={{ color: "#dc2626" }}><Delete fontSize="small" /></IconButton>
+              </Box>
             </Box>
           ))}
-
-          {currentItems.length === 0 && (
-            <Typography align="center">No items found</Typography>
-          )}
-
-          {/* Mobile Pagination */}
-          {!isMobile || filteredItems.length <= rowsPerPage ? null : (
-            <Stack direction="row" justifyContent="space-between" alignItems="center">
-              <IconButton size="small" disabled={page === 1} onClick={() => setPage(p => p - 1)}>
-                <NavigateBefore />
-              </IconButton>
-              <Typography variant="caption">{page} / {totalPages || 1}</Typography>
-              <IconButton size="small" disabled={page >= totalPages} onClick={() => setPage(p => p + 1)}>
-                <NavigateNext />
-              </IconButton>
-            </Stack>
-          )}
         </Stack>
       )}
+
+      {/* ---------- PAGINATION ---------- */}
+      <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "center", mt: 3, mb: 5 }}>
+          <Typography variant="caption">Page {page} of {totalPages || 1}</Typography>
+          <Stack direction="row" spacing={1}>
+            <IconButton disabled={page === 1} onClick={() => setPage(p => p - 1)}><NavigateBefore /></IconButton>
+            <IconButton disabled={page >= totalPages} onClick={() => setPage(p => p + 1)}><NavigateNext /></IconButton>
+          </Stack>
+      </Box>
+
+      {/* ---------- FIXED RESPONSIVE DIALOG ---------- */}
       <Dialog 
         open={openAddItem} 
         onClose={() => setOpenAddItem(false)}
         maxWidth="sm"
         fullWidth
-        PaperProps={{
-          sx: {
-            borderRadius: "8px",
-            minWidth: "500px"
-          }
-        }}
+        fullScreen={isMobile} // मोबाइल पर पूरी स्क्रीन लेगा ताकि बाहर न जाए
       >
         <DialogTitle sx={{ display: "flex", justifyContent: "space-between", alignItems: "center", bgcolor: "#f2f2f2" }}>
           Add New Item
-          <IconButton size="small" onClick={() => setOpenAddItem(false)}>
-            <Close />
-          </IconButton>
+          <IconButton onClick={() => setOpenAddItem(false)}><Close /></IconButton>
         </DialogTitle>
-        <DialogContent sx={{ p: 3 }}>
+        <DialogContent sx={{ p: isMobile ? 2 : 3 }}>
+          {/* isDialog={true} पास करना जरूरी है */}
           <AddItem onClose={() => setOpenAddItem(false)} isDialog={true} />
         </DialogContent>
       </Dialog>
