@@ -30,11 +30,12 @@ body {
 .search-box {
     flex: 1;
     background: white;
-    border-radius: 20px;
+    border-radius: 2px;
     padding: 10px 14px;
     display: flex;
     align-items: center;
     gap: 8px;
+
     border: 1px solid #e5e7eb;
 }
 
@@ -59,12 +60,15 @@ body {
     background: #3b82f6;
     color: white;
     border: none;
-    font-size: 20px;
+    font-size: 22px; /* slightly bigger for better visual */
     border-radius: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
     cursor: pointer;
+    font-weight: bold;
+    line-height: 1; /* important to center single character */
+    padding: 0; /* remove any padding */
 }
 
 @media (min-width: 768px) {

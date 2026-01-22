@@ -1,27 +1,3 @@
-/* .modal-bg {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: rgba(0,0,0,0.4);
-   display: flex;
-  align-items: center;
-  justify-content: center;
-  
-
-
-  
-} */
-
-/* .modal-box {
-  margin-top: 50px;
-  background: #fff;
-  width: 600px;
-  border-radius: 6px;
-  padding: 15px;
-} */
-
 .modal-bg {
   position: fixed;
   top: 0;
@@ -33,7 +9,6 @@
   display: flex;
   justify-content: center;
   align-items: flex-start;
-
   padding-top: 40px;
 }
 
@@ -44,9 +19,6 @@
   border-radius: 6px;
   padding: 15px;
 }
-
-
-
 
 .modal-header {
   display: flex;
@@ -59,18 +31,29 @@
   cursor: pointer;
   font-size: 20px;
 }
-
-.modal-body {
+ .modal-body {
   display: flex;
-  gap: 10px;
+  gap: 20px;
   margin: 20px 0;
+}
+
+.field {
+  width: 100%;
 }
 
 .modal-body input {
   width: 100%;
-  padding: 8px;
+  padding: 10px;
   border: 1px solid #ccc;
   border-radius: 4px;
+  box-sizing: border-box;
+}
+
+
+.error-text {
+  color: red;
+  font-size: 12px;
+  margin-top: 4px;
 }
 
 .modal-footer {
@@ -95,34 +78,3 @@
   border-radius: 4px;
   width: 25%;
 }
-
-.error-text {
-  color: red;
-  text-align: center;
-  margin-top: -10px;
-  font-size: 14px;
-}
-
-
-
-/* 
-@media (max-width: 600px) {
-  .modal-box {
-    width: 95%;
-    padding: 10px;
-  }
-
-  .modal-footer {
-    flex-direction: column;
-    gap: 10px;
-  }
-
-  .submit-btn,
-  .reset-btn {
-    width: 100%;
-  }
-} */
-
-
-
-

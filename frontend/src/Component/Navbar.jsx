@@ -1,22 +1,30 @@
 import React from "react";
+import { useNavigate } from "react-router-dom"; // for redirect
 import "./Navbar.css";
 import logo from "../assets/CMP.jpeg";
 
-const Navbar = ({ username = "Admin", onLogout }) => {
+const Navbar = ({ username = "Admin" }) => {
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+      navigate("/"); 
+  };
+
   return (
     <nav className="navbar">
-      {/* Left: Logo */}
       <div className="navbar-left">
-        <img src={logo} alt="Catering Management" className="navbar-logo" />
+        <img src={logo} alt="CMP" className="navbar-logo" />
         <span className="navbar-title">Catering Management</span>
       </div>
 
-      {/* Right: User info */}
       <div className="navbar-right">
-        <span className="welcome-text">Welcome, {username}</span>
-        <button className="logout-btn" onClick={onLogout}>
-          Logout
-        </button>
+       <h4><span className="welcome-text">Hi, {username}</span></h4>
+   
+        <i
+          className="fas fa-sign-out-alt logout-icon"
+          title="Logout"
+          onClick={handleLogout}
+        ></i>
       </div>
     </nav>
   );
