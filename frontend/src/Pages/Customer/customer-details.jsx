@@ -1,7 +1,3 @@
-<<<<<<< HEAD
-import React from "react";
-import "./customer-details.css";
-=======
 import { useState, useMemo } from "react";
 import {
   Box, Typography, TextField, IconButton, Button,
@@ -12,6 +8,7 @@ import {
 } from "@mui/material";
 import { Search, Add, Edit, Delete, NavigateBefore, NavigateNext, Close } from "@mui/icons-material";
 import AddCustomer from "./AddCustomer";
+import "./customer-details.css";
 
 /* ---------- DATA ---------- */
 const customersData = [
@@ -25,7 +22,6 @@ const customersData = [
   { id: 8, name: "Anjali Singh", mobile: "9876543210", status: "Active" },
   { id: 9, name: "Vikram Kumar", mobile: "9765432109", status: "Inactive" }
 ];
->>>>>>> dc9662b02d46f11f4990449ed7e3219542e2559c
 
 const PRIMARY = "#1f3a8a";
 const PRIMARY_HOVER = "#1e40af";
@@ -35,27 +31,12 @@ const BG_LIGHT = "#f5f8ff";
 export default function Customers() {
   const isMobile = useMediaQuery("(max-width:600px)");
 
-<<<<<<< HEAD
-
-
-  const items = [
-    { id: 1, name: "pooja Deshmukh", Number: 9827345378 },
-    { id: 2, name: "Rajesh Patil", Number: 9871423897 },
-    { id: 3, name: "Anjili joshi", Number: 9356829017 },
-    { id: 4, name: "Sachin Gupta", Number: 9353682849 },
-    { id: 5, name: "Priya Mishra", Number: 94518223471 },
-    { id: 6, name: "pooja Deshmukh", Number: 9827345378 },
-    { id: 7, name: "Neha Kulkani", Number: 9827345378 },
-    { id: 8, name: " Nitin Mishara", Number: 9827345378 },
-    { id: 9, name: "pooja Deshmukh", Number: 9827345378 },
-=======
   const [searchInput, setSearchInput] = useState("");
   const [searchQuery, setSearchQuery] = useState("");
   const [openAddCustomer, setOpenAddCustomer] = useState(false);
 
   const [page, setPage] = useState(1);
   const [rowsPerPage, setRowsPerPage] = useState(6);
->>>>>>> dc9662b02d46f11f4990449ed7e3219542e2559c
 
   const filteredCustomers = useMemo(
     () =>
@@ -71,28 +52,6 @@ export default function Customers() {
   const currentCustomers = filteredCustomers.slice(startIndex, startIndex + rowsPerPage);
 
   return (
-<<<<<<< HEAD
-    <div className="container-fluid mt-4">
-      <div className="d-flex justify-content-between align-items-center mb-3">
-        <h2 className="items-title m-0">Customers</h2>
-
-        <button className="btn text-white btn-primary"   >
-          + Add Customer
-        </button>
-
-
-      </div>
-
-      {/* Search */}
-      <div className="mb-3 d-flex">
-        <input
-          type="text"
-          className="form-control w-100 mr-2"
-          placeholder="Search Customers..."
-        />
-        <button className="btn  ms-2 btn-primary " >
-          <i className="fas fa-search fs-5 text-white"></i>
-=======
     <Box sx={{ p: isMobile ? 2 : 3, bgcolor: "#fff", minHeight: "100vh" }}>
       {/* ---------- HEADER ---------- */}
       <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "center", mb: 2 }}>
@@ -144,7 +103,6 @@ export default function Customers() {
           }}
         />
       </Box>
->>>>>>> dc9662b02d46f11f4990449ed7e3219542e2559c
 
       {/* ---------- CONTENT ---------- */}
       {!isMobile ? (
@@ -191,39 +149,6 @@ export default function Customers() {
         </Stack>
       )}
 
-<<<<<<< HEAD
-      {/* Table */}
-      <div className="table-responsive ">
-        <table className="table table-bordered align-middle table-striped ">
-          <thead className="table-light">
-            <tr>
-              <th className="action-col">Actions</th>
-              <th style={{ textAlign: "center" }}>Name</th>
-              <th style={{ textAlign: "center" }} >Mo.Number</th>
-            </tr>
-          </thead>
-          <tbody>
-            {items.map((item) => (
-              <tr key={item.id}>
-                <td className="action-col ">
-                  <div className="action-btns">
-                    <button className="btn  btn-sm btn-outline-primary  ">
-                      <FaEdit />
-                    </button>
-                    <button className="btn  btn-sm btn-outline-danger ">
-                      <FaTrash />
-                    </button>
-                  </div>
-                </td>
-                <td>{item.name}</td>
-                <td>{item.Number}</td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
-    </div>
-=======
       {/* ---------- PAGINATION ---------- */}
       <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "center", mt: 3, mb: 4 }}>
         {!isMobile && (
@@ -256,6 +181,5 @@ export default function Customers() {
         </DialogContent>
       </Dialog>
     </Box>
->>>>>>> dc9662b02d46f11f4990449ed7e3219542e2559c
   );
 }

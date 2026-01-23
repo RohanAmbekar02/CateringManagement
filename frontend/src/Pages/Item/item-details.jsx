@@ -32,10 +32,6 @@ export default function Items() {
   // मोबाइल डिटेक्शन (600px या उससे कम)
   const isMobile = useMediaQuery("(max-width:600px)");
 
-<<<<<<< HEAD
-
-=======
->>>>>>> dc9662b02d46f11f4990449ed7e3219542e2559c
   const [searchInput, setSearchInput] = useState("");
   const [searchQuery, setSearchQuery] = useState("");
   const [openAddItem, setOpenAddItem] = useState(false);
@@ -43,10 +39,6 @@ export default function Items() {
   const [page, setPage] = useState(1);
   const [rowsPerPage, setRowsPerPage] = useState(6);
 
-<<<<<<< HEAD
-
-=======
->>>>>>> dc9662b02d46f11f4990449ed7e3219542e2559c
   const filteredItems = useMemo(
     () =>
       itemsData.filter(item =>
@@ -84,80 +76,45 @@ export default function Items() {
       </Box>
 
       {/* ---------- SEARCH ---------- */}
-<<<<<<< HEAD
-      <Box sx={{ display: "flex", gap: 1, mb: 3, maxWidth: 380 }}>
+      <Box sx={{ display: "flex", gap: 1, mb: 3, maxWidth: isMobile ? "100%" : 780 }}>
         <TextField
           size="small"
+          fullWidth
           placeholder="Search items"
           value={searchInput}
-          onChange={(e) => setSearchInput(e.target.value)}
-          sx={{
-            flex: 1,
-
-            borderRadius: "10px"
+          onChange={(e) => {
+            setSearchInput(e.target.value);
+            setSearchQuery(e.target.value);
+            setPage(1);
+          }}
+          sx={{ borderRadius: "10px" }}
+          InputProps={{
+            startAdornment: (
+              <InputAdornment position="start">
+                <Search sx={{ color: "#9ca3af" }} />
+              </InputAdornment>
+            ),
+            endAdornment: searchInput && (
+              <InputAdornment position="end">
+                <IconButton
+                  size="small"
+                  onClick={() => {
+                    setSearchInput("");
+                    setSearchQuery("");
+                    setPage(1);
+                  }}
+                  sx={{
+                    color: "#9ca3af",
+                    "&:hover": { color: PRIMARY_HOVER },
+                  }}
+                >
+                  <Close fontSize="small" />
+                </IconButton>
+              </InputAdornment>
+            )
           }}
         />
-
-        <IconButton
-          onClick={() => { setSearchQuery(searchInput); setPage(1); }}
-          sx={{
-            bgcolor: PRIMARY,
-            color: "#fff",
-            width: 40,
-            height: 40,
-            borderRadius: "10px",
-            "&:hover": {
-              bgcolor: PRIMARY_HOVER,
-              transform: "scale(1.05)"
-            },
-            transition: "0.25s"
-          }}
-        >
-          <Search />
-        </IconButton>
       </Box>
-=======
-   <Box sx={{ display: "flex", gap: 1, mb: 3, maxWidth: isMobile ? "100%" : 780 }}>
-  <TextField
-    size="small"
-    fullWidth
-    placeholder="Search items"
-    value={searchInput}
-    onChange={(e) => {
-      setSearchInput(e.target.value);
-      setSearchQuery(e.target.value);
-      setPage(1);
-    }}
-    sx={{ borderRadius: "10px" }}
-    InputProps={{
-      startAdornment: (
-        <InputAdornment position="start">
-          <Search sx={{ color: "#9ca3af" }} />
-        </InputAdornment>
-      ),
-      // --- CROSS BUTTON (CLEAR) वापस यहाँ है ---
-      endAdornment: searchInput && (
-        <InputAdornment position="end">
-          <IconButton
-            size="small"
-            onClick={() => {
-              setSearchInput("");
-              setSearchQuery("");
-              setPage(1);
-            }}
-            sx={{
-              color: "#9ca3af",
-              "&:hover": { color: PRIMARY_HOVER },
-            }}
-          >
-            <Close fontSize="small" />
-          </IconButton>
-        </InputAdornment>
-      )
-    }}
-  />
-</Box>
->>>>>>> dc9662b02d46f11f4990449ed7e3219542e2559c
 
       {/* ---------- CONTENT ---------- */}
       {!isMobile ? (
