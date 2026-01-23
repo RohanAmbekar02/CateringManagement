@@ -14,11 +14,16 @@
     "@emotion/styled": "^11.14.1",
     "@mui/icons-material": "^7.3.7",
     "@mui/material": "^7.3.7",
+<<<<<<< HEAD
     "html2canvas": "^1.4.1",
     "jspdf": "^4.0.0",
     "react": "^19.2.0",
     "react-dom": "^19.2.0",
     "react-icons": "^5.5.0",
+=======
+    "react": "^19.2.0",
+    "react-dom": "^19.2.0",
+>>>>>>> dc9662b02d46f11f4990449ed7e3219542e2559c
     "react-router-dom": "^7.12.0"
   },
   "devDependencies": {

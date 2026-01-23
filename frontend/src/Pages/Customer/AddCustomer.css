@@ -1,52 +1,148 @@
-.modal-bg {
+/* Overlay */
+.overlay {
   position: fixed;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  background: rgba(0,0,0,0.4);
-
+  background: rgba(0, 0, 0, 0.4);
   display: flex;
   justify-content: center;
   align-items: flex-start;
-  padding-top: 40px;
 }
 
+/* Modal Box */
 .modal-box {
-  background: #fff;
+  margin-top: 40px;
   width: 600px;
   max-width: 95%;
-  border-radius: 6px;
-  padding: 15px;
+  background: #fff;
+  border-radius: 8px;
 }
 
+/* Header */
 .modal-header {
+  background: #f2f2f2;
+  padding: 10px 15px;
   display: flex;
   justify-content: space-between;
-  border-bottom: 1px solid #ddd;
-  padding-bottom: 8px;
+}
+
+.add-head {
+  font-size: 20px;
 }
 
 .close-btn {
   cursor: pointer;
   font-size: 20px;
 }
- .modal-body {
+
+/* Body */
+.modal-body {
+  padding: 20px;
   display: flex;
-  gap: 20px;
-  margin: 20px 0;
+  flex-wrap: wrap;
+  gap: 15px;
 }
 
-.field {
+.modal-body input {
+  width: 48%;
+  padding: 8px;
+  box-sizing: border-box;
+}
+
+/* Buttons container */
+.btn-container {
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+  margin-top: 20px;
   width: 100%;
+}
+
+/* Common button */
+.btn-1 {
+  padding: 12px 30px;
+  font-size: 16px;
+  border-radius: 6px;
+  border: none;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  width: 45%;
+  font-weight: 600;
+  height: 40px;
+}
+
+/* Submit Button */
+.submit-btn {
+  background-color: #28a745;
+  color: white;
+}
+
+.submit-btn:hover {
+  background-color: #218838;
+}
+
+/* Reset Button */
+.reset-btn {
+  background-color: #dc3545;
+  color: white;
+}
+
+.reset-btn:hover {
+  background-color: #c82333;
+  color: white;
+}
+
+/* Button text fix */
+.sub-text {
+  margin: 0;
+  line-height: 1;
+}
+
+/* Validation */
+.field-wrapper {
+  width: 48%;              
+  display: flex;
+  flex-direction: column; 
 }
 
 .modal-body input {
   width: 100%;
-  padding: 10px;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  box-sizing: border-box;
+}
+
+@media (max-width: 600px) {
+  .field-wrapper {
+    width: 100%;
+  }
+
+  .modal-box {
+    width: 95%;
+    margin-top: 20px;
+  }
+
+  .modal-body {
+    flex-direction: column;
+  }
+
+  .modal-body input {
+    width: 100%;
+  }
+
+  .btn-container {
+    flex-direction: column;
+  }
+
+  .btn-1 {
+    width: 100%;
+    font-size: 15px;
+  }
+}
+
+.error-text {
+  color: red;
+  font-size: 12px;
+  margin-top: 4px;
 }
 
 
