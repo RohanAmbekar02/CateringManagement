@@ -37,7 +37,7 @@ export default function Items() {
   const [openAddItem, setOpenAddItem] = useState(false);
 
   const [page, setPage] = useState(1);
-  const [rowsPerPage, setRowsPerPage] = useState(6);
+  const [rowsPerPage] = useState(6);
 
   const filteredItems = useMemo(
     () =>

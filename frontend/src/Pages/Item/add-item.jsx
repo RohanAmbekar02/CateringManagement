@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import { Box, Typography, Button, Stack, useMediaQuery, useTheme } from "@mui/material";
 import { Inventory, CurrencyRupee, Save, RotateLeft } from "@mui/icons-material";
 
-const AddItem = ({ onClose, isDialog = false }) => {
+const AddItem = ({ onClose  }) => {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
 
