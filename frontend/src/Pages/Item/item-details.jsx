@@ -76,7 +76,7 @@ export default function Items() {
       </Box>
 
       {/* ---------- SEARCH ---------- */}
-      <Box sx={{ display: "flex", gap: 1, mb: 3, maxWidth: isMobile ? "100%" : 780 }}>
+      <Box sx={{ display: "flex", gap: 1, mb: 3, maxWidth: isMobile ? "100%" : 500 }}>
         <TextField
           size="small"
           fullWidth

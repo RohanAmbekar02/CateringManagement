@@ -110,7 +110,7 @@ export default function Customers() {
           <Table>
             <TableHead sx={{ bgcolor: BG_LIGHT }}>
               <TableRow>
-                <TableCell sx={{ fontWeight: 700 }}>#</TableCell>
+                <TableCell sx={{ fontWeight: 700 }}>S.No.</TableCell>
                 <TableCell sx={{ fontWeight: 700 }}>Name</TableCell>
                 <TableCell sx={{ fontWeight: 700 }}>Mobile</TableCell>
                 <TableCell sx={{ fontWeight: 700, textAlign: "center" }}>Actions</TableCell>
@@ -136,7 +136,7 @@ export default function Customers() {
         <Stack spacing={2}>
           {currentCustomers.map((customer, i) => (
             <Box key={customer.id} sx={{ border: `1px solid ${BORDER}`, borderRadius: "14px", p: 2, position: "relative" }}>
-              <Typography variant="caption" color="text.secondary">#{startIndex + i + 1}</Typography>
+              <Typography variant="caption" color="text.secondary">S.No.{startIndex + i + 1}</Typography>
               <Typography fontWeight={600}>{customer.name}</Typography>
               <Typography color="text.secondary" variant="body2">📱 {customer.mobile}</Typography>
               

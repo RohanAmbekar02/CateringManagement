@@ -1,18 +1,40 @@
 import React, { useState } from "react";
-import "./details.css";
-import { useNavigate } from "react-router-dom";
+import {
+  Box,
+  Typography,
+  TextField,
+  Button,
+  IconButton,
+  InputAdornment,
+  useMediaQuery
+} from "@mui/material";
+import {
+  Search,
+  Add,
+  Close,
+  Edit,
+  Delete,
+  Call
+} from "@mui/icons-material";
 import ReceiptIcon from "@mui/icons-material/Receipt";
-import { Edit, Delete, Call } from "@mui/icons-material";
 import PersonIcon from "@mui/icons-material/Person";
+import { useNavigate } from "react-router-dom";
+import "./details.css";
+
+/* ---------- COLORS (same as Items page) ---------- */
+const PRIMARY = "#1f3a8a";
+const PRIMARY_HOVER = "#1e40af";
 
 export default function Details() {
   const navigate = useNavigate();
+  const isMobile = useMediaQuery("(max-width:600px)");
 
-  //  STATES
+  /* ---------- STATES ---------- */
   const [filter, setFilter] = useState("all");
   const [search, setSearch] = useState("");
+  const [searchInput, setSearchInput] = useState("");
 
-  //  ORDERS DATA
+  /* ---------- ORDERS DATA ---------- */
   const orders = [
     {
       id: 1,
@@ -44,48 +66,89 @@ export default function Details() {
     },
   ];
 
-  //  SEARCH + FILTER LOGIC
+  /* ---------- SEARCH + FILTER ---------- */
   const filteredOrders = orders.filter(order => {
-    const matchStatus =
-      filter === "all" || order.status === filter;
-
-    const matchSearch =
-      order.name.toLowerCase().includes(search.toLowerCase());
-
+    const matchStatus = filter === "all" || order.status === filter;
+    const matchSearch = order.name
+      .toLowerCase()
+      .includes(search.toLowerCase());
     return matchStatus && matchSearch;
   });
 
-  //  STATUS CAPITAL FUNCTION
   const capitalizeStatus = status =>
     status.charAt(0).toUpperCase() + status.slice(1);
 
   return (
-    <div className="page shadow container-fluid">
-      <h2 className="page-title ml-2">Orders</h2>
-
-      {/*  SEARCH */}
-      <div className="search-row">
-        <div className="search-box">
-          <i className="fa-solid fa-magnifying-glass"></i>
-          <input
-            placeholder="Search by customer name..."
-            value={search}
-            onChange={e => setSearch(e.target.value)}
-          />
-        </div>
-
-
-        <button
-          className="add-item-btn"
-          onClick={() => navigate("/add-order")}
+    <Box sx={{ p: isMobile ? 2 : 3, bgcolor: "#fff", minHeight: "100vh" }}>
+      
+      {/* ---------- HEADER ---------- */}
+      <Box
+        sx={{
+          display: "flex",
+          justifyContent: "space-between",
+          alignItems: "center",
+          mb: 2,
+        }}
+      >
+        <Typography
+          variant={isMobile ? "h6" : "h5"}
+          fontWeight={700}
+          color={PRIMARY}
         >
-          <span className="plus">+</span>
-          <span>Add Order</span>
-        </button>
+          Orders
+        </Typography>
 
-      </div>
+        <Button
+          startIcon={<Add />}
+          variant="contained"
+          onClick={() => navigate("/add-order")}
+          sx={{
+            bgcolor: PRIMARY,
+            textTransform: "none",
+            borderRadius: "10px",
+            px: isMobile ? 1.5 : 2.5,
+            "&:hover": { bgcolor: PRIMARY_HOVER },
+          }}
+        >
+          {isMobile ? "Add" : "Add Order"}
+        </Button>
+      </Box>
 
-      {/*  FILTER BUTTONS */}
+      {/* ---------- SEARCH ---------- */}
+      <Box sx={{ maxWidth: isMobile ? "100%" : 500, mb: 3 }}>
+        <TextField
+          size="small"
+          fullWidth
+          placeholder="Search by customer name"
+          value={searchInput}
+          onChange={(e) => {
+            setSearchInput(e.target.value);
+            setSearch(e.target.value);
+          }}
+          InputProps={{
+            startAdornment: (
+              <InputAdornment position="start">
+                <Search sx={{ color: "#9ca3af" }} />
+              </InputAdornment>
+            ),
+            endAdornment: searchInput && (
+              <InputAdornment position="end">
+                <IconButton
+                  size="small"
+                  onClick={() => {
+                    setSearchInput("");
+                    setSearch("");
+                  }}
+                >
+                  <Close fontSize="small" />
+                </IconButton>
+              </InputAdornment>
+            ),
+          }}
+        />
+      </Box>
+
+      {/* ---------- FILTER BUTTONS ---------- */}
       <div className="filters">
         <button
           className={`filter ${filter === "all" ? "active" : ""}`}
@@ -98,38 +161,42 @@ export default function Details() {
           className={`filter ${filter === "paid" ? "active" : ""}`}
           onClick={() => setFilter("paid")}
         >
-          <i className="fa-solid fa-circle-check text-success"></i> Paid
+          Paid
         </button>
 
         <button
           className={`filter ${filter === "pending" ? "active" : ""}`}
           onClick={() => setFilter("pending")}
         >
-          <i className="fa-solid fa-clock text-warning"></i> Pending
+          Pending
         </button>
       </div>
 
-      {/*  ORDER CARDS */}
+      {/* ---------- ORDER CARDS ---------- */}
       {filteredOrders.length === 0 ? (
-        <p style={{ marginTop: 20 }}>No orders found</p>
+        <Typography sx={{ mt: 3 }}>No orders found</Typography>
       ) : (
         filteredOrders.map(order => (
           <div key={order.id} className="order-card shadow">
             <div>
-              <div className="order-title">
-                <button className="icon user-icon">
+              <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
+                <IconButton size="small">
                   <PersonIcon />
-                </button>
-                {order.name}
-              </div>
+                </IconButton>
 
-              <div className="green">
+                {/* SAME AS ITEM NAME */}
+                <Typography variant="subtitle1" fontWeight={600}>
+                  {order.name}
+                </Typography>
+              </Box>
+
+              <Typography sx={{ color: "green", mt: 1 }}>
                 ₹ Total amount: ₹ {order.total}.00
-              </div>
+              </Typography>
 
-              <div className="red">
+              <Typography sx={{ color: "red" }}>
                 ₹ Remaining amount: ₹ {order.remaining}.00
-              </div>
+              </Typography>
             </div>
 
             <div className="actions">
@@ -167,6 +234,6 @@ export default function Details() {
           </div>
         ))
       )}
-    </div>
+    </Box>
   );
 }
