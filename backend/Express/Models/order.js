@@ -1,100 +1,22 @@
-// const mongoose = require("mongoose");
-
-// const orderSchema = new mongoose.Schema(
-//   {
-//     customer: {
-//       customerId: {
-//         type: mongoose.Schema.Types.ObjectId,
-//         ref: "Customer",
-//         required: true
-//       },
-//       name: {
-//         type: String,
-//         required: true
-//       }
-//     },
-
-//     orderDate: {
-//       type: Date,
-//       required: true
-//     },
-
-//     items: [
-//       {
-//         itemId: {
-//           type: mongoose.Schema.Types.ObjectId,
-//           ref: "Item",
-//           required: true
-//         },
-//         name: String,
-//         price: Number,
-//         qty: Number,
-//         total: Number
-//       }
-//     ],
-
-//     subtotal: Number,
-//     paidAmount: Number,
-//     unpaidAmount: Number,
-//     status: {
-//       type: String,
-//       enum: ["pending", "paid"],
-//       default: "pending"
-//     }
-//   },
-//   { timestamps: true }
-// );
-
-// module.exports = mongoose.model("Order", orderSchema);
 const mongoose = require("mongoose");
 
-const orderSchema = new mongoose.Schema(
-  {
-    customer: {
-      customerId: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "Customer",
-        required: true
-      },
-      name: {
-        type: String,
-        required: true
-      },
-      contact: {   // ✅ ADD THIS
-        type: String,
-        required: true
-      }
-    },
+const orderSchema = new mongoose.Schema({
+  // Frontend se sirf selectedCustomer ki ID aa rahi hai
+  customer: { type: mongoose.Schema.Types.ObjectId, ref: "Customer", required: true },
+  
+  // Frontend 'date' bhej raha hai
+  date: { type: Date, required: true },
 
-    orderDate: {
-      type: Date,
-      required: true
-    },
+  items: [{
+    itemId: { type: mongoose.Schema.Types.ObjectId, ref: "Item" },
+    qty: { type: Number, required: true },
+    price: { type: Number, required: true }
+  }],
 
-    items: [
-      {
-        itemId: {
-          type: mongoose.Schema.Types.ObjectId,
-          ref: "Item",
-          required: true
-        },
-        name: String,
-        price: Number,
-        qty: Number,
-        total: Number
-      }
-    ],
-
-    subtotal: Number,
-    paidAmount: Number,
-    unpaidAmount: Number,
-    status: {
-      type: String,
-      enum: ["pending", "paid"],
-      default: "pending"
-    }
-  },
-  { timestamps: true }
-);
+  // Frontend 'totalAmount' bhej raha hai
+  totalAmount: { type: Number, required: true },
+  paidAmount: { type: Number, default: 0 },
+  unpaidAmount: { type: Number }
+}, { timestamps: true });
 
 module.exports = mongoose.model("Order", orderSchema);
